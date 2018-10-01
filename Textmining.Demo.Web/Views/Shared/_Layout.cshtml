@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - متن کاوی</title>
+    <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/rastikerdar/vazir-font/v19.0.0/dist/font-face.css">
+    <link href="~/css/stylish-portfolio.min.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    @RenderBody()
+    <footer class="footer text-center">
+        <div class="container">
+            <ul class="list-inline mb-5">
+                
+                <li class="list-inline-item">
+                    <a class="social-link rounded-circle text-white" href="http://github.com/text-minig">
+                        <i class="icon-social-github"></i>
+                    </a>
+                </li>
+            </ul>
+            <p class="text-muted small mb-0">برای اطلاعات بیشتر به سایت <a href="http://text-mining.ir">متن کاوی</a> مراجعه کنید</p>
+        </div>
+    </footer>
+    <script src="~/vendor/jquery/jquery.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
