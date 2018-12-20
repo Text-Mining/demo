@@ -29,7 +29,7 @@ namespace Textmining.Demo.Web.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult FormalConverter(ApiViewModel model)
         {
-            model.OutputText = CallApi("http://api.text-mining.ir/api/PreProcessing/FormalConverter", model.InputText);
+            model.OutputText = CallApi("http://api.text-mining.ir/api/TextRefinementController/FormalConverter", model.InputText);
             return View(model);
         }
 
@@ -40,9 +40,9 @@ namespace Textmining.Demo.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SpellCorrector(ApiViewModel model)
+        public IActionResult SpellCorrector(SpellCheckerModel model)
         {
-            model.OutputText = CallApi("http://api.text-mining.ir/api/PreProcessing/SpellCorrector", model.InputText);
+            model.OutputText = CallApi("http://api.text-mining.ir/api/TextRefinementController/SpellCorrector", model);
             return View(model);
         }
 
@@ -61,7 +61,7 @@ namespace Textmining.Demo.Web.Controllers
             return jwtToken;
         }
 
-        private string CallApi(string apiUrl,string inputText)
+        private string CallApi(string apiUrl, object inputModel)
         {
             try
             {
@@ -71,15 +71,21 @@ namespace Textmining.Demo.Web.Controllers
                 request.AddHeader("Cache-Control", "no-cache");
                 request.AddHeader("Authorization", $"Bearer {GetJWTToken()}");
                 request.AddHeader("Content-Type", "application/json");
-                request.AddParameter("input", $"\"{inputText}\"", ParameterType.RequestBody);
+                request.AddParameter("input", ObjectModelToString(inputModel), ParameterType.RequestBody); //$"\"{inputText}\""
                 IRestResponse response = client.Execute(request);
                 return response.Content.Replace("\"", string.Empty);
             }
             catch (Exception ex)
             {
                 //ToDo: better error message
-                return "Error";
+                return $"Error: {ex.Message}";
             }
+        }
+
+        private string ObjectModelToString(object model)
+        {
+            string jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            return jsonStr;
         }
     }
 }

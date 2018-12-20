@@ -1,4 +1,4 @@
-﻿@model Textmining.Demo.Web.Models.ApiViewModel
+﻿@model Textmining.Demo.Web.Models.SpellCheckerModel
 @{
     ViewData["Title"] = "اصلاح اشتباهات تایپی";
 }
@@ -17,7 +17,11 @@
                 </p>
                 <form asp-controller="Home" asp-action="SpellCorrector" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <textarea asp-for="InputText" class="form-control" placeholder="مثال: شلام"></textarea>
+                    <textarea asp-for="Text" class="form-control" placeholder="مثال: شلام"></textarea>
+                    <br />
+                    <label>تعداد کلمات کاندید (برای اشتباهات تایپی): </label>
+                    <input asp-for="CandidateCount" type="number" min="1" max="5" step="1" value="3" />
+                    <br/>
                     <input type="submit" class="btn btn-dark btn-xl js-scroll-trigger mt-3" value="ارسال">
                 </form>
 
