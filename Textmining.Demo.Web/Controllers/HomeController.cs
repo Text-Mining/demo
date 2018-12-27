@@ -9,6 +9,7 @@ namespace Textmining.Demo.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly string _urlPath = "https://api.text-mining.ir/api/";
         private readonly IConfiguration _config;
         public HomeController(IConfiguration config)
         {
@@ -29,7 +30,7 @@ namespace Textmining.Demo.Web.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult FormalConverter(ApiViewModel model)
         {
-            model.OutputText = CallApi("http://api.text-mining.ir/api/TextRefinementController/FormalConverter", model.InputText);
+            model.OutputText = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
             return View(model);
         }
 
@@ -42,7 +43,7 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SpellCorrector(SpellCheckerModel model)
         {
-            model.OutputText = CallApi("http://api.text-mining.ir/api/TextRefinementController/SpellCorrector", model);
+            model.OutputText = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
             return View(model);
         }
 
@@ -50,7 +51,7 @@ namespace Textmining.Demo.Web.Controllers
         {
             var textMiningApiKey = _config.GetValue<string>("TextMiningApiKey");
             string jwtToken = string.Empty;
-            var client = new RestClient($"http://api.text-mining.ir/api/Token/GetToken?apikey={textMiningApiKey}");
+            var client = new RestClient($"{_urlPath}Token/GetToken?apikey={textMiningApiKey}");
             var request = new RestRequest(Method.GET);
             request.AddHeader("Cache-Control", "no-cache");
             IRestResponse response = client.Execute(request);
@@ -78,7 +79,7 @@ namespace Textmining.Demo.Web.Controllers
             catch (Exception ex)
             {
                 //ToDo: better error message
-                return $"Error: {ex.Message}";
+                return "Error";
             }
         }
 
