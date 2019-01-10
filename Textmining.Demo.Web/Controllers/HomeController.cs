@@ -27,11 +27,11 @@ namespace Textmining.Demo.Web.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public IActionResult FormalConverter(ApiViewModel model)
         {
-            model.OutputText = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
-            return View(model);
+            ViewData["Output"] = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
+            return PartialView("_ApiOutput");
         }
 
         public IActionResult SpellCorrector()
@@ -43,8 +43,8 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SpellCorrector(SpellCheckerModel model)
         {
-            model.OutputText = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
-            return View(model);
+            ViewData["Output"] = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
+            return PartialView("_ApiOutput");
         }
 
         private string GetJWTToken()

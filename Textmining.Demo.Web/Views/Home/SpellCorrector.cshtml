@@ -1,34 +1,23 @@
 ﻿@model Textmining.Demo.Web.Models.SpellCheckerModel
 @{
-    ViewData["Title"] = "اصلاح اشتباهات تایپی";
+    Layout = null;
 }
 
-<partial name="_DemoPagesHeader" />
 
-<section class="content-section bg-light" id="about">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <h2>اصلاح اشتباهات تایپی</h2>
-                <p class="lead mb-5">
-                    این یکی از امکانات API متن کاوی است که برای پیش‌پردازش متن‌ها کاربرد دارد
-                    <br />
-                    و بر اساس لیست کلمات موجود می‌تواند اشتباهات تایپی را اصلاح کند.
-                </p>
-                <form asp-controller="Home" asp-action="SpellCorrector" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <textarea asp-for="Text" class="form-control" placeholder="مثال: شلام"></textarea>
-                    <br />
-                    <label>تعداد کلمات کاندید (برای اشتباهات تایپی): </label>
-                    <input asp-for="CandidateCount" type="number" min="1" max="5" step="1" value="3" />
-                    <br/>
-                    <input type="submit" class="btn btn-dark btn-xl js-scroll-trigger mt-3" value="ارسال">
-                </form>
+<p class="text-muted">
+ این ابزار در پیش‌پردازش متن‌ها کاربرد دارد
+    و بر اساس لیست کلمات موجود می‌تواند اشتباهات تایپی را اصلاح کند.
+</p>
+<form data-ajax-url="@Url.Action("SpellCorrector","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#spellresult" >
 
-                <hr />
-                @Html.DisplayTextFor(c => c.OutputText)
-                <span asp-for="OutputText" class="text-right"></span>
-            </div>
-        </div>
-    </div>
-</section>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="tel" asp-for="Text" class="form-control" placeholder="مثال: شلام"/>
+    <br />
+    <label>تعداد کلمات کاندید (برای اشتباهات تایپی): </label>
+    <input asp-for="CandidateCount" type="number" min="1" max="5" step="1" value="3" class="form-control" />
+    <br />
+    <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
+</form>
+
+<hr />
+<span id="spellresult"  class="text-right"></span>

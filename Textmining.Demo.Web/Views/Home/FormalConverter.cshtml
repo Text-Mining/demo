@@ -1,32 +1,15 @@
 ﻿@model Textmining.Demo.Web.Models.ApiViewModel
-
 @{
-    ViewData["Title"] = "تبدیل محاوره به رسمی";
+    Layout = null;
 }
+<p class="text-muted">
+    این ابزار در پیش‌پردازش متن‌ها کاربرد دارد و بر اساس لیست کلمات موجود می‌تواند متن محاوره را به رسمی تبدیل کند.
+</p>
+<form data-ajax-url="@Url.Action("FormalConverter","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#convertresult">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="text" asp-for="InputText" class="form-control" placeholder="مثال: خونه" />
+    <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
+</form>
 
-<partial name="_DemoPagesHeader" />
-
-
-<section class="content-section bg-light" id="about">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <h2>تبدیل محاوره به رسمی </h2>
-                <p class="lead mb-5">
-                    این یکی از امکانات API متن کاوی است که برای پیش‌پردازش متن‌ها کاربرد دارد
-                    <br />
-                    و بر اساس لیست کلمات موجود می‌تواند متن محاوره را به رسمی تبدیل کند.
-                </p>
-                <form asp-controller="Home" asp-action="FormalConverter" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <textarea asp-for="InputText" class="form-control" placeholder="مثال: خونه"></textarea>
-                    <input type="submit" class="btn btn-dark btn-xl js-scroll-trigger mt-3" value="ارسال">
-                </form>
-
-                <hr />
-                @Html.DisplayTextFor(c => c.OutputText)
-                <span asp-for="OutputText" class="text-right"></span>
-            </div>
-        </div>
-    </div>
-</section>
+<hr />
+<span id="convertresult" class="text-right"></span>

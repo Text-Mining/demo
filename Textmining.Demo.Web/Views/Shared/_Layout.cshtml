@@ -1,41 +1,97 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!doctype html>
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewData["Title"] - متن کاوی</title>
-    <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />
-    <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/rastikerdar/vazir-font/v19.0.0/dist/font-face.css">
-    <link href="~/css/stylish-portfolio.min.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Icons" />
+    <link href="~/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+    <link href="~/css/material-dashboard-rtl.css?v=1.1" rel="stylesheet" />
+    <link rel="icon" href="~/images/logo.png">
+    <link href="~/css/demo.css" rel="stylesheet" />
 </head>
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="azure" data-background-color="white">
+            <div class="logo">
+                <a href="/" class="simple-text logo-mini">
 
-<body id="page-top">
-    @RenderBody()
-    <footer class="footer text-center">
-        <div class="container">
-            <ul class="list-inline mb-5">
-
-                <li class="list-inline-item">
-                    <a class="social-link rounded-circle text-white" href="http://github.com/text-mining">
-                        <i class="icon-social-github"></i>
-                    </a>
-                </li>
-            </ul>
-            <p class="text-muted small mb-0">برای اطلاعات بیشتر به سایت <a href="http://text-mining.ir">متن کاوی</a> مراجعه کنید</p>
+                    <img src="~/images/logo.png" />
+                </a>
+                <a href="/" class="simple-text logo-normal">
+                    دمو ابزارهای متن‌کاوی
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li class="nav-item active  ">
+                        <a class="nav-link" href="#0">
+                            <i class="material-icons">dashboard</i>
+                            <p>دموها</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://api.text-mining.ir">
+                            <i class="material-icons">link</i>
+                            <p>توابع API با swagger</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://docs.text-mining.ir">
+                            <i class="material-icons">link</i>
+                            <p>مستندات API</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </footer>
-    <script src="~/vendor/jquery/jquery.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.js"></script>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="#demos">دمو ابزارهای متن کاوی</a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="copyright float-right">
+                        ساخته شده با <i class="material-icons">favorite</i> توسط
+                        <a href="https://text-mining.ir" target="_blank">متن کاوی</a> در ایران
+                    </div>
+                    <!-- your footer here -->
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap-material-design.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
     @RenderSection("Scripts", required: false)
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129065209-1"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'UA-129065209-1');
+        gtag('config', 'UA-129065209-1');
     </script>
 </body>
 </html>
