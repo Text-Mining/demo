@@ -11,10 +11,10 @@
 <form data-ajax-url="@Url.Action("SpellCorrector","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#spellresult" >
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="tel" asp-for="Text" class="form-control" placeholder="مثال: شلام"/>
+    <input asp-for="Text" class="form-control" placeholder="مثال: شلام"/>
     <br />
     <label>تعداد کلمات کاندید (برای اشتباهات تایپی): </label>
-    <input asp-for="CandidateCount" type="number" min="1" max="5" step="1" value="3" class="form-control" />
+    <input asp-for="CandidateCount" type="tel" min="1" max="5" step="1" value="3" class="form-control" />
     <br />
     <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
 </form>
