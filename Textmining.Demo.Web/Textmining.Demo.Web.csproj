@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>0.2.1</Version>
+    <Version>0.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Home\SwearWordTagger.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Home\FormalConverter.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -47,6 +47,21 @@ namespace Textmining.Demo.Web.Controllers
             return PartialView("_ApiOutput");
         }
 
+
+        public IActionResult SwearWordTagger()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SwearWordTagger(ApiViewModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}TextRefinement/SwearWordTagger", model.InputText);
+            return PartialView("_ApiOutput");
+        }
+
+
         private string GetJWTToken()
         {
             var textMiningApiKey = _config.GetValue<string>("TextMiningApiKey");
