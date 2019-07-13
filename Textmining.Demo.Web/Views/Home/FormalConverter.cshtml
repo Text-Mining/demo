@@ -1,13 +1,23 @@
 ﻿@model Textmining.Demo.Web.Models.ApiViewModel
 @{
-    Layout = null;
+    ViewData["Title"] = "تبدیل محاوره به رسمی";
+    ViewData["Desc"] = "این ابزار در پیش‌پردازش متن‌ها کاربرد دارد و بر اساس لیست کلمات موجود می‌تواند متن محاوره را به رسمی تبدیل کند.";
+
 }
-<p class="text-muted">
-    این ابزار در پیش‌پردازش متن‌ها کاربرد دارد و بر اساس لیست کلمات موجود می‌تواند متن محاوره را به رسمی تبدیل کند.
-</p>
+
 <form data-ajax-url="@Url.Action("FormalConverter","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#convertresult">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="text" asp-for="InputText" class="form-control" placeholder="مثال: خونه" />
+    <div class="form-group">
+        <label>متن ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <input type="text" asp-for="InputText" class="form-control" value="اگه اون گزینه رو کلیک کنین، یه پنجره باز میشه که میتونین رمز عبورتون رو اونجا تغییر بدین
+    داشتم مي رفتم برم، ديدم گرفت نشست، گفتم بذار بپرسم ببينم مياد نمياد ديدم ميگه نميخوام بيام بذار برم بگيرم بخوابم نمیتونم بشینم.
+    کتابای خودتونه
+    نمیدونم چی بگم که دیگه اونجا نره
+    ساعت چن میتونین بیایین؟" />
+
+        </div>
+    </div>
     <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
 </form>
 

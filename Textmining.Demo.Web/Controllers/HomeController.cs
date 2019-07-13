@@ -9,6 +9,7 @@ namespace Textmining.Demo.Web.Controllers
 {
     public class HomeController : Controller
     {
+        #region Constructor and Index Action
         private readonly string _urlPath = "https://api.text-mining.ir/api/";
         private readonly IConfiguration _config;
         public HomeController(IConfiguration config)
@@ -18,8 +19,12 @@ namespace Textmining.Demo.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("SpellCorrector");
         }
+
+        #endregion
+
+        #region FormalConverter
 
         public IActionResult FormalConverter()
         {
@@ -34,6 +39,9 @@ namespace Textmining.Demo.Web.Controllers
             return PartialView("_ApiOutput");
         }
 
+        #endregion
+
+        #region SpellCorrector
         public IActionResult SpellCorrector()
         {
             return View();
@@ -47,6 +55,9 @@ namespace Textmining.Demo.Web.Controllers
             return PartialView("_ApiOutput");
         }
 
+        #endregion
+
+        #region SwwarWordTagger
 
         public IActionResult SwearWordTagger()
         {
@@ -61,6 +72,101 @@ namespace Textmining.Demo.Web.Controllers
             return PartialView("_ApiOutput");
         }
 
+        #endregion
+
+        #region SentimentClassifier
+        public IActionResult SentimentClassifier()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SentimentClassifier(ApiViewModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}SentimentAnalyzer/SentimentClassifier", model.InputText);
+            return PartialView("_ApiOutput");
+        }
+        #endregion
+
+        #region NamedEntityRecognitionDetect
+        public IActionResult NamedEntityRecognitionDetect()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult NamedEntityRecognitionDetect(ApiViewModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}NamedEntityRecognition/Detect", model.InputText);
+            return PartialView("_ApiOutput");
+        }
+        #endregion
+
+        #region LanguageDetectionPredict
+        public IActionResult LanguageDetectionPredict()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LanguageDetectionPredict(ApiViewModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}LanguageDetection/Predict", model.InputText);
+            return PartialView("_ApiOutput");
+        }
+        #endregion
+
+        #region LemmatizeText2Text
+        public IActionResult LemmatizeText2Text()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LemmatizeText2Text(ApiViewModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}Stemmer/LemmatizeText2Text", model.InputText);
+            return PartialView("_ApiOutput");
+        }
+        #endregion
+
+        #region GetMostSimilarWord
+        public IActionResult GetMostSimilarWord()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetMostSimilarWord(GetMostSimilarWordModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
+            return PartialView("_ApiOutput");
+        }
+
+        #endregion
+
+        #region KeywordExtraction
+        public IActionResult KeywordExtraction()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult KeywordExtraction(KeywordExtractionModel model)
+        {
+            ViewData["Output"] = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
+            return PartialView("_ApiOutput");
+        }
+
+        #endregion
+
+        #region Common Methods   
 
         private string GetJWTToken()
         {
@@ -91,7 +197,7 @@ namespace Textmining.Demo.Web.Controllers
                 IRestResponse response = client.Execute(request);
                 return response.Content.Replace("\"", string.Empty);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //ToDo: better error message
                 return "Error";
@@ -103,5 +209,8 @@ namespace Textmining.Demo.Web.Controllers
             string jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(model);
             return jsonStr;
         }
+
+
+        #endregion
     }
 }

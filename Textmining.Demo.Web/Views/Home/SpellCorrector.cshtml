@@ -1,23 +1,29 @@
 ﻿@model Textmining.Demo.Web.Models.SpellCheckerModel
 @{
-    Layout = null;
+    ViewData["Title"] = "اصلاح اشتباهات تایپی";
+    ViewData["Desc"] = "این ابزار در پیش‌پردازش متن‌ها کاربرد دارد و بر اساس لیست کلمات موجود می‌تواند اشتباهات تایپی را اصلاح کند.";
 }
 
 
-<p class="text-muted">
- این ابزار در پیش‌پردازش متن‌ها کاربرد دارد
-    و بر اساس لیست کلمات موجود می‌تواند اشتباهات تایپی را اصلاح کند.
-</p>
-<form data-ajax-url="@Url.Action("SpellCorrector","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#spellresult" >
+<form data-ajax-url="@Url.Action("SpellCorrector","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#spellresult">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input asp-for="Text" class="form-control" placeholder="مثال: شلام"/>
-    <br />
-    <label>تعداد کلمات کاندید (برای اشتباهات تایپی): </label>
-    <input asp-for="CandidateCount" type="tel" min="1" max="5" step="1" value="3" class="form-control" />
-    <br />
+
+    <div class="form-group">
+        <label>متن ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <input type="text" asp-for="Text" class="form-control" value="فهوه با مبات میجسبد" />
+
+        </div>
+        <label>تعداد کلمات جایگزین</label>
+        <div class="form-group bmd-form-group is-filled">
+            <label class="bmd-label-floating">تعداد کلماتی که جایگزین کلمات اشتباه می‌شوند</label>
+            <input asp-for="CandidateCount" type="tel" min="1" max="5" step="1" value="3" class="form-control" />
+        </div>
+    </div>
+
     <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
 </form>
 
 <hr />
-<span id="spellresult"  class="text-right"></span>
+<span id="spellresult" class="text-right"></span>

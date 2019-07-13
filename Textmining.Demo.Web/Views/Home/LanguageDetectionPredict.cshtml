@@ -1,0 +1,21 @@
+﻿@model Textmining.Demo.Web.Models.ApiViewModel
+@{
+    ViewData["Title"] = "شناسایی نوع زبان";
+    ViewData["Desc"] = "این تابع حدود ۶۰ نوع زبان را برای متن ورودی شناسایی کند";
+
+}
+
+<form data-ajax-url="@Url.Action("LanguageDetectionPredict","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#result">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label>متن ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <input type="text" asp-for="InputText" class="form-control" value="شام ییبسن یا یوخ. سن سیز بوغازیمنان گتمیر شام. به به نه قشه یردی. ساغ اول سیز نئجه سیز. نئجه سن؟ اوشاقلار نئجه دیر؟ سلام لاری وار سیزین کی لر نئجه دیر. یاخچی" />
+
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
+</form>
+
+<hr />
+<span id="result" class="text-right"></span>

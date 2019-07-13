@@ -1,0 +1,21 @@
+﻿@model Textmining.Demo.Web.Models.ApiViewModel
+@{
+    ViewData["Title"] = "ریشه‌یابی متن";
+    ViewData["Desc"] = "متن بهمراه کلمات ریشه (افعال به سوم شخص گذشته ساده تبدیل می‌شوند)";
+
+}
+
+<form data-ajax-url="@Url.Action("LemmatizeText2Text","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#result">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label>متن ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <input type="text" asp-for="InputText" class="form-control" value="دانشجویان زیادی به مدارس استعدادهای درخشان راه پیدا نخواهند کرد که با مشکلات بعدی مواجه شوند" />
+
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
+</form>
+
+<hr />
+<span id="result" class="text-right"></span>

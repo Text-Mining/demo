@@ -1,0 +1,29 @@
+﻿@model Textmining.Demo.Web.Models.GetMostSimilarWordModel
+@{
+    ViewData["Title"] = "دریافت کلمات مشابه";
+    ViewData["Desc"] = "این ابزار کلمات مشابه کلمه ورودی را بر اساس تعداد دلخواه برمی‌گرداند";
+}
+
+
+<form data-ajax-url="@Url.Action("GetMostSimilarWord","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#result">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label>کلمه ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <input type="text" asp-for="Word" class="form-control" value="روحانی" />
+
+        </div>
+        <label>تعداد کلمات مشابه</label>
+        <div class="form-group bmd-form-group is-filled">
+            <label class="bmd-label-floating">تعداد کلمات مشابه که در نتیجه برمی‌گردند</label>
+            <input asp-for="TopN" type="tel" min="1" max="20" step="1" value="10" class="form-control" />
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
+</form>
+
+<hr />
+<span id="result" class="text-right"></span>

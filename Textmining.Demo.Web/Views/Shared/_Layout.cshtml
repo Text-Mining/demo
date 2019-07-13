@@ -12,46 +12,26 @@
     <link href="~/css/demo.css" rel="stylesheet" />
 </head>
 <body>
+    <div id="loading">Loading</div>
     <div class="wrapper ">
-        <div class="sidebar" data-color="azure" data-background-color="white">
+        <div class="sidebar" data-color="purple" data-background-color="white">
             <div class="logo">
                 <a href="/" class="simple-text logo-mini">
 
                     <img src="~/images/logo.png" />
                 </a>
                 <a href="/" class="simple-text logo-normal">
-                    دمو ابزارهای متن‌کاوی
+                    دمو ابزارهای فارسی‌یار
                 </a>
             </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="nav-item active  ">
-                        <a class="nav-link" href="#0">
-                            <i class="material-icons">dashboard</i>
-                            <p>دموها</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="https://api.text-mining.ir">
-                            <i class="material-icons">link</i>
-                            <p>توابع API با swagger</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="https://docs.text-mining.ir">
-                            <i class="material-icons">link</i>
-                            <p>مستندات API</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <Partial name="_Menu" />
         </div>
         <div class="main-panel">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="#demos">دمو ابزارهای متن کاوی</a>
+                        <a class="navbar-brand" href="#demos">دمو ابزارهای پردازش متن از سرویس متن‌کاوی فارسی‌یار</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>
@@ -65,14 +45,63 @@
             <!-- End Navbar -->
             <div class="content">
                 <div class="container-fluid">
-                    @RenderBody()
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12">
+                            <div class="card" id="demos">
+                                <div class="card-header card-header-tabs card-header-primary">
+                                    <h4 class="card-title"> دموی ابزار @ViewData["Title"]</h4>
+                                    <p class="card-category">@ViewData["Desc"]</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="demoformcontainer">
+                                            @RenderBody()
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card card-profile">
+                                <div class="card-avatar">
+                                    <a href="#">
+                                        <img class="img" src="~/images/logo.png">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-category text-gray">شروع به کار سریع برنامه‌نویسان</h6>
+                                    <h4 class="card-title">متن‌کاوی برای برنامه‌نویسان</h4>
+                                    <p class="card-description text-right">
+                                        استفاده از  سرویس‌های پردازش متن فارسی متن‌کاوی فارسی‌یار و افزودن آن به نرم‌افزار‌ها خیلی ساده است:
+
+                                        <ul class="text-right">
+                                            <li>
+                                                در سایت <a target="_blank" href="https://app.text-mining.ir">متن‌کاوی</a> ثبت‌نام و <b>کلید API</b> دریافت کنید
+                                            </li>
+                                            <li>
+                                                <a target="_blank" href="https://docs.text-mining.ir">مستندات</a> را مطالعه کنید و ابزارهای مورد نیاز را براساس راهنما به برنامه خود اضافه کنید
+                                            </li>
+                                        </ul>
+
+                                    </p>
+                                    <p class="card-description text-right">
+                                        کد نمونه می‌خواهید؟ می‌توانید همین پروژه دمو را از <a href="https://github.com/Text-Mining/demo" target="_blank">مخزن گیت‌هاب</a> دریافت و با اعمال کلید API در تنظیمات، اجرا کنید. این پروژه کراس پلتفرم بوده و در ویندوز، مک و لینوکس قابل اجراست.
+                                    </p>
+                                    <a href="https://app.text-mining.ir" class="btn btn-info btn-round">ثبت نام و شروع رایگان</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright float-right">
-                        ساخته شده با <i class="material-icons">favorite</i> توسط
-                        <a href="https://text-mining.ir" target="_blank">متن کاوی</a> در ایران
+                        ساخته شده با <i class="material-icons text-danger">favorite</i> توسط
+                        <a href="https://text-mining.ir" target="_blank">متن‌کاوی فارسی‌یار</a> در ایران
                     </div>
                     <!-- your footer here -->
                 </div>
@@ -92,6 +121,17 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-129065209-1');
+    </script>
+    <script>
+        $(function () {
+            var current = location.pathname;
+            $('.nav li a').each(function () {
+                var $this = $(this);
+                if ($this.attr('href').indexOf(current) !== -1) {
+                    $this.parent().addClass('active');
+                }
+            })
+        })
     </script>
 </body>
 </html>

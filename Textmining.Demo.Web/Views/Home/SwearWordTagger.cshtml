@@ -1,13 +1,25 @@
 ﻿@model Textmining.Demo.Web.Models.ApiViewModel
 @{
-    Layout = null;
+    ViewData["Title"] = "تشخیص کلمات زشت و رکیک";
+    ViewData["Desc"] = "این ابزار در بهبود متون تاثیر دارد و متن ورودی را از نظر وجود کلمات رکیک بررسی می‌کند";
 }
-<p class="text-muted">
-    این ابزار در بهبود متون تاثیر دارد و متن ورودی را از نظر وجود کلمات رکیک بررسی می‌کند
-</p>
-<form data-ajax-url="@Url.Action("SwearWordTagger","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#checkresult">
+
+<form data-ajax-url="@Url.Action("SwearWordTagger","Home")"
+      asp-antiforgery="true"
+      data-ajax="true"
+      data-ajax-loading="loading"
+      data-ajax-method="POST"
+      data-ajax-update="#checkresult">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="text" asp-for="InputText" class="form-control" value="خـــــــرررررهای دیووووونههه  -   صکس  س.ک.س ی   بیپدرومادر" />
+    <div class="form-group">
+        <label>متن ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <label class="bmd-label-floating"> می‌توانید در متن، به عمد از کلمات زشت و رکیک استفاده کنید. API ما آن‌ها را شناسایی می‌کند</label>
+            <input type="text" asp-for="InputText" class="form-control" value="خـــــــرررررهای دیووووونههه  -   صکس  س.ک.س ی   بیپدرومادر" />
+
+        </div>
+    </div>
+
     <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
 </form>
 
