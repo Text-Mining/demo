@@ -1,0 +1,20 @@
+﻿@model int
+@{
+    Layout = null;
+
+}
+
+@if (Model == 0)
+{
+    <span class="badge badge-danger">حس منفی</span>
+}
+@if (Model == 1)
+{
+    <span class="badge badge-light">حس خنثی</span>
+}
+
+@if (Model == 2)
+{
+    <span class="badge badge-success">حس مثبت</span>
+}
+

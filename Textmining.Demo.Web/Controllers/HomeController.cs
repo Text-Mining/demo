@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using Textmining.Demo.Web.Models;
 
 namespace Textmining.Demo.Web.Controllers
@@ -57,7 +59,7 @@ namespace Textmining.Demo.Web.Controllers
 
         #endregion
 
-        #region SwwarWordTagger
+        #region SwearWordTagger
 
         public IActionResult SwearWordTagger()
         {
@@ -68,8 +70,11 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SwearWordTagger(ApiViewModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}TextRefinement/SwearWordTagger", model.InputText);
-            return PartialView("_ApiOutput");
+            var apiOutput = CallApi($"{_urlPath}TextRefinement/SwearWordTagger", model.InputText);
+
+            var viewModel = JsonConvert.DeserializeObject<Dictionary<string, string>>(apiOutput);
+
+            return PartialView("_SwearTaggerOutput", viewModel);
         }
 
         #endregion
@@ -84,8 +89,11 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SentimentClassifier(ApiViewModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}SentimentAnalyzer/SentimentClassifier", model.InputText);
-            return PartialView("_ApiOutput");
+            var apiOutput = CallApi($"{_urlPath}SentimentAnalyzer/SentimentClassifier", model.InputText);
+
+            var viewModel = JsonConvert.DeserializeObject<int>(apiOutput);
+
+            return PartialView("_SentimentClassifierOutput", viewModel);
         }
         #endregion
 
@@ -99,8 +107,11 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult NamedEntityRecognitionDetect(ApiViewModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}NamedEntityRecognition/Detect", model.InputText);
-            return PartialView("_ApiOutput");
+            var apiOutput = CallApi($"{_urlPath}NamedEntityRecognition/Detect", model.InputText);
+
+            var viewModel = JsonConvert.DeserializeObject<List<Phrase>>(apiOutput);
+
+            return PartialView("_NamedEntityRecognitionDetectOutput", viewModel);
         }
         #endregion
 
@@ -160,8 +171,16 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult KeywordExtraction(KeywordExtractionModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
-            return PartialView("_ApiOutput");
+            model.MinWordLength = 3;
+            model.MaxWordCount = 3;
+            model.MinKeywordFrequency = 1;
+            model.Method = "TFIDF";
+
+            var apiOutput = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
+
+            var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput);
+
+            return PartialView("_KeywordExtractionOutput", viewModel);
         }
 
         #endregion
@@ -193,9 +212,9 @@ namespace Textmining.Demo.Web.Controllers
                 request.AddHeader("Cache-Control", "no-cache");
                 request.AddHeader("Authorization", $"Bearer {GetJWTToken()}");
                 request.AddHeader("Content-Type", "application/json");
-                request.AddParameter("input", ObjectModelToString(inputModel), ParameterType.RequestBody); //$"\"{inputText}\""
+                request.AddParameter("input", ObjectModelToString(inputModel), ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
-                return response.Content.Replace("\"", string.Empty);
+                return response.Content;
             }
             catch (Exception)
             {

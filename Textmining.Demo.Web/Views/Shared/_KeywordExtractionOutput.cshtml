@@ -1,0 +1,27 @@
+﻿@model Dictionary<string, double>
+@{
+    Layout = null;
+
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>
+                <h5>
+                    کلمه کلیدی
+                </h5>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<string, double> word in Model)
+        {
+            <tr>
+                <td>
+                    @word.Key
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

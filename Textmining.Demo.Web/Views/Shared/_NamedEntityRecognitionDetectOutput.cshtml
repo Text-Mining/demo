@@ -1,0 +1,35 @@
+﻿@model List<Phrase>
+@{
+    Layout = null;
+
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>
+                <h5>
+                    کلمه
+                </h5>
+            </td>
+            <td>
+                <h5>
+                    نوع موجودیت
+                </h5>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Phrase word in Model)
+        {
+            <tr>
+                <td>
+                    @word.Word
+                </td>
+                <td>
+                    @word.Tags.SingleOrDefault(x => x.Key == "NER").Value.Item1
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

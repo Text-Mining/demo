@@ -1,0 +1,46 @@
+﻿@model Dictionary<string, string>
+@{
+    Layout = null;
+
+}
+
+@if (!Model.Any())
+{
+    <span>در متن ارسالی، کلمه زشت و رکیکی پیدا نشد</span>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>
+                    <h5>
+                        کلمه
+                    </h5>
+                </td>
+                <td>
+                    <h5>وضعیت</h5>
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (KeyValuePair<string, string> word in Model)
+            {
+                var badgeColor = word.Value == "MildSwearWord" ? "warning" : "danger";
+                var badgeTitle = word.Value == "MildSwearWord" ? "کلمه زشت" : "کلمه رکیک";
+                <tr>
+                    <td>
+                        @word.Key
+                    </td>
+                    <td>
+                        <span class="badge badge-@badgeColor">@badgeTitle</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+
