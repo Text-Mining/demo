@@ -2,5 +2,5 @@
     Layout = null;
 }
 
-@ViewData["Output"]
+@Html.Raw(ViewData["Output"].ToString().Replace("\\r\\n","<br/>"))
 
