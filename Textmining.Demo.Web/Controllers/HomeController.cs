@@ -185,6 +185,24 @@ namespace Textmining.Demo.Web.Controllers
 
         #endregion
 
+        #region Virastar
+        public IActionResult Virastar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Virastar(VirastarModel model)
+        {
+            var result = CallApi($"{_urlPath}Virastar/ScanText", model);
+
+            var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result);
+
+            return PartialView("_VirastarOutput", viewModel);
+        }
+        #endregion
+
         #region Common Methods   
 
         private string GetJWTToken()

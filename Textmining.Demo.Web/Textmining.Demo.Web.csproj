@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>0.6.3</Version>
+    <Version>0.7.0</Version>
+    <UserSecretsId>9ec224c9-3006-4886-b3e2-2f8ab3e3f1e0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Home\Virastar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Home\LanguageDetectionPredict.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -37,6 +41,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Home\SpellCorrector.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_VirastarOutput.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_NamedEntityRecognitionDetectOutput.cshtml">

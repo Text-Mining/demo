@@ -1,0 +1,28 @@
+﻿@model Textmining.Demo.Web.Models.VirastarModel
+@{
+    ViewData["Title"] = "ویراستار";
+    ViewData["Desc"] = "بررسی و ویراستاری متن ورودی و پیشنهاد اصلاحات مربوط به نویسه‌ها، فاصله و نیم‌فاصله‌ها، جایگزینی طبق دستور زبان و آیین‌نامه مصوب فرهنگستان و همچنین غلط‌یاب املایی در متن فارسی ";
+
+}
+
+<form data-ajax-url="@Url.Action("Virastar","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#convertresult">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label>متن ورودی جهت بررسی</label>
+        <div class="form-group bmd-form-group is-filled">
+
+            <textarea id="Text" name="Text" rows="7" class="form-control">
+حتما   ان ها مومن را احترام مے ڪنند، یگ بپنجره ی بزگ باز میشود . !و می نداشتم
+</textarea>
+
+
+
+
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
+</form>
+
+<hr />
+<span id="convertresult" class="text-right"></span>
+

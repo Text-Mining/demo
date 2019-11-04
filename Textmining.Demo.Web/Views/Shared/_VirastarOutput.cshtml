@@ -1,0 +1,42 @@
+﻿@model List<TokenInfo>
+@{
+    Layout = null;
+
+}
+<style>
+    .has-suggestions {
+        border-bottom: 2px solid #ff0000;
+        margin-left: 5px;
+    }
+</style>
+
+@foreach (var tokenInfo in Model)
+{
+
+    if (tokenInfo.IsChanged)
+    {
+        var suggestion = $"<span class='text-mute'>{tokenInfo.EditList.Last().SuggestedText}</span>";
+        <span class="has-suggestions"
+              data-trigger="hover"
+              data-toggle="popover"
+              data-placement="top"
+              data-html="true"
+              title="@suggestion"
+              data-content="@tokenInfo.EditList.Last().Description">
+            @tokenInfo.OriginalText
+        </span>
+    }
+    else
+    {
+        <span class="">
+            @tokenInfo.OriginalText
+        </span>
+    }
+}
+
+<script>
+
+    $(function () {
+        $('span[data-toggle="popover"]').popover();
+    })
+</script>
