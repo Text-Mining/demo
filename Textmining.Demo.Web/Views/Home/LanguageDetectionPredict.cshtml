@@ -5,7 +5,7 @@
 
 }
 
-<form data-ajax-url="@Url.Action("LanguageDetectionPredict","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#result">
+<form data-ajax-url="@Url.Action("LanguageDetectionPredict","Home")" data-ajax-loading="#loading" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#result">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label>متن ورودی جهت بررسی</label>

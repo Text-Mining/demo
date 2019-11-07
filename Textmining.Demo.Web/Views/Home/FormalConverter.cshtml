@@ -5,7 +5,7 @@
 
 }
 
-<form data-ajax-url="@Url.Action("FormalConverter","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#convertresult">
+<form data-ajax-url="@Url.Action("FormalConverter","Home")" data-ajax-loading="#loading" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#convertresult">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label>متن ورودی جهت بررسی</label>

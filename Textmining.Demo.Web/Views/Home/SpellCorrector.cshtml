@@ -5,7 +5,7 @@
 }
 
 
-<form data-ajax-url="@Url.Action("SpellCorrector","Home")" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#spellresult">
+<form data-ajax-url="@Url.Action("SpellCorrector","Home")" data-ajax-loading="#loading" asp-antiforgery="true" data-ajax="true" data-ajax-method="POST" data-ajax-update="#spellresult">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
