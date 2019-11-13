@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using Textmining.Demo.Web.Models;
 
 namespace Textmining.Demo.Web.Controllers
@@ -248,6 +249,36 @@ namespace Textmining.Demo.Web.Controllers
         }
 
 
+        #endregion
+
+        #region Report Error 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult ReportError(string errorReportInputText, string errorReportComment)
+        {
+            SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
+            {
+                Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"), _config.GetValue<string>("ErrorReport:SmtpPassword"))
+            };
+
+            MailMessage mail = new MailMessage
+            {
+                From = new MailAddress(_config.GetValue<string>("ErrorReport:SmtpUsername")),
+                IsBodyHtml=true,                
+                Subject = "گزارش خطا در دمو ابزارهای فارسی‌یار"
+            };
+            mail.To.Add(_config.GetValue<string>("ErrorReport:ReportEmail"));            
+            mail.Body = $"<p dir='rtl'>" +
+                $"ورودی: {errorReportInputText} " +
+                $"<br/> " +
+                $"توضیحات:{errorReportComment}" +
+                $"</p>";
+
+            smtp.Send(mail);
+
+            return RedirectToAction("Index");
+        }
         #endregion
     }
 }

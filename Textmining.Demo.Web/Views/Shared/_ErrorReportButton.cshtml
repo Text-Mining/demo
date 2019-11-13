@@ -1,0 +1,15 @@
+﻿@using Microsoft.Extensions.Configuration
+@{
+    Layout = null;
+}
+
+@inject IConfiguration config
+
+
+@if (config.GetValue<bool>("ErrorReport:Enable"))
+{
+    <a class="btn btn-warning d-block" data-toggle="modal" data-target="#errorReportModal">
+        <i class="material-icons">warning</i>
+        گزارش ایراد در خروجی
+    </a>
+}
