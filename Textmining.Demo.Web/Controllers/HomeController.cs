@@ -273,6 +273,8 @@ namespace Textmining.Demo.Web.Controllers
                 $"ورودی: {errorReportInputText} " +
                 $"<br/> " +
                 $"توضیحات:{errorReportComment}" +
+                $"<br/> " +
+                $"آدرس ابزار:{Request.Headers["Referer"].ToString()}"+
                 $"</p>";
 
             smtp.Send(mail);
