@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NToastNotify;
+using NToastNotify.Libraries;
 
 namespace Textmining.Demo.Web
 {
@@ -32,7 +29,13 @@ namespace Textmining.Demo.Web
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddNToastNotifyToastr(new ToastrOptions()
+                {
+                    ProgressBar = false,
+                    PositionClass = ToastPositions.BottomFullWidth
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +50,9 @@ namespace Textmining.Demo.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            // https://github.com/nabinked/NToastNotify
+            app.UseNToastNotify();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -12,11 +12,13 @@
     <link href="~/css/demo.css" rel="stylesheet" />
 </head>
 <body>
+    @await Component.InvokeAsync("NToastNotify")
+
     <div id="loading"></div>
     <div class="modal fade" id="errorReportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header text-white" style="background-color:#ff9800">
+                <div class="modal-header text-white" style="background-color: #ff9800">
                     <h5 class="modal-title" id="exampleModalLabel">گزارش ایراد در خروجی</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" class="text-white">&times;</span>
@@ -29,7 +31,7 @@
 
                         <div class="form-group">
                             <input type="hidden" id="errorReportInputText" name="errorReportInputText" />
-                            <label>متن ورودی، اتوماتیک ارسال می‌شود. در صورت نیاز، توضیح دیگری اضافه کنید </label>
+                            <label style="color: dimgrey">متن ورودی و نام ابزار، بصورت خودکار برای ما ارسال می‌شود. در صورت نیاز، توضیح دیگری اضافه کنید. </label>
 
                             <div class="form-group  bmd-form-group">
                                 <textarea type="text" placeholder="توضیح ایراد (اختیاری)" class="form-control" id="errorReportComment" name="errorReportComment" rows="5"></textarea>
@@ -50,7 +52,7 @@
     </div>
     <div class="wrapper ">
         <div class="sidebar" data-color="purple" data-background-color="white">
-            <div class="logo" style="background-color:#fff">
+            <div class="logo" style="background-color: #fff">
                 <a href="/" class="simple-text logo-mini">
 
                     <img src="~/images/logo.png" />
@@ -108,7 +110,7 @@
                                     <h6 class="card-category text-gray">شروع به کار سریع برنامه‌نویسان</h6>
                                     <h4 class="card-title">متن‌کاوی برای برنامه‌نویسان</h4>
                                     <p class="card-description text-right">
-                                        استفاده از  سرویس‌های پردازش متن فارسی متن‌کاوی فارسی‌یار و افزودن آن به نرم‌افزار‌ها خیلی ساده است:
+                                        استفاده از سرویس‌های پردازش متن فارسی متن‌کاوی فارسی‌یار و افزودن آن به نرم‌افزار‌ها (با هر زبان برنامه‌نویسی که باشند) خیلی ساده است:
 
                                         <ul class="text-right">
                                             <li>
@@ -224,19 +226,21 @@
                     var new_image = $(this).find("img").attr('src');
 
                     if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-                        $sidebar_img_container.fadeOut('fast', function () {
-                            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-                            $sidebar_img_container.fadeIn('fast');
-                        });
+                        $sidebar_img_container.fadeOut('fast',
+                            function () {
+                                $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                                $sidebar_img_container.fadeIn('fast');
+                            });
                     }
 
                     if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
                         var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-                        $full_page_background.fadeOut('fast', function () {
-                            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-                            $full_page_background.fadeIn('fast');
-                        });
+                        $full_page_background.fadeOut('fast',
+                            function () {
+                                $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                                $full_page_background.fadeIn('fast');
+                            });
                     }
 
                     if ($('.switch-sidebar-image input:checked').length == 0) {
@@ -303,27 +307,31 @@
                             $('body').addClass('sidebar-mini');
 
                             md.misc.sidebar_mini_active = true;
-                        }, 300);
+                        },
+                            300);
                     }
 
                     // we simulate the window Resize so the charts will get updated in realtime.
                     var simulateWindowResize = setInterval(function () {
                         window.dispatchEvent(new Event('resize'));
-                    }, 180);
+                    },
+                        180);
 
                     // we stop the simulation of Window Resize after the animations are completed
                     setTimeout(function () {
                         clearInterval(simulateWindowResize);
-                    }, 1000);
+                    },
+                        1000);
 
                 });
             });
         });
     </script>
     <script>
-        $('#errorReportModal').on('show.bs.modal', function (e) {
-            $("#errorReportInputText").val($(".demo-form-input").val());
-        })
+        $('#errorReportModal').on('show.bs.modal',
+            function (e) {
+                $("#errorReportInputText").val($(".demo-form-input").val());
+            })
     </script>
 
     @RenderSection("Scripts", required: false)
@@ -331,7 +339,9 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129065209-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
+
         function gtag() { dataLayer.push(arguments); }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-129065209-1');

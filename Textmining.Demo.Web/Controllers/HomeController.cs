@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using Textmining.Demo.Web.Models;
+using NToastNotify;
+using NToastNotify.Libraries;
 
 namespace Textmining.Demo.Web.Controllers
 {
@@ -15,14 +17,18 @@ namespace Textmining.Demo.Web.Controllers
         #region Constructor and Index Action
         private readonly string _urlPath = "https://api.text-mining.ir/api/";
         private readonly IConfiguration _config;
-        public HomeController(IConfiguration config)
+        private readonly IToastNotification _toastNotification;
+        private static int _feedback;
+
+        public HomeController(IConfiguration config, IToastNotification toastNotification)
         {
             _config = config;
+            _toastNotification = toastNotification;
         }
 
         public IActionResult Index()
         {
-            return RedirectToAction("SpellCorrector");
+            return RedirectToAction("Virastar"); //SpellCorrector
         }
 
         #endregion
@@ -189,6 +195,8 @@ namespace Textmining.Demo.Web.Controllers
         #region Virastar
         public IActionResult Virastar()
         {
+            CheckFeedbackNotif();
+
             return View();
         }
 
@@ -244,7 +252,7 @@ namespace Textmining.Demo.Web.Controllers
 
         private string ObjectModelToString(object model)
         {
-            string jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            string jsonStr = JsonConvert.SerializeObject(model);
             return jsonStr;
         }
 
@@ -257,30 +265,60 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult ReportError(string errorReportInputText, string errorReportComment)
         {
-            SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
+            try
             {
-                Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"), _config.GetValue<string>("ErrorReport:SmtpPassword"))
-            };
+                SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
+                {
+                    Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"),
+                        _config.GetValue<string>("ErrorReport:SmtpPassword"))
+                    //,Timeout = 30000
+                };
 
-            MailMessage mail = new MailMessage
+                MailMessage mail = new MailMessage
+                {
+                    From = new MailAddress(_config.GetValue<string>("ErrorReport:SmtpUsername")),
+                    IsBodyHtml = true,
+                    Subject = "گزارش خطا در دمو ابزارهای فارسی‌یار"
+                };
+                mail.To.Add(_config.GetValue<string>("ErrorReport:ReportEmail"));
+                mail.Body = $"<p dir='rtl'>" +
+                            $"ورودی: {errorReportInputText} " +
+                            $"<br/> " +
+                            $"توضیحات:{errorReportComment}" +
+                            $"<br/> " +
+                            $"آدرس ابزار:{Request.Headers["Referer"].ToString()}" +
+                            $"</p>";
+
+                smtp.Send(mail);
+                _feedback = 1;
+            }
+            catch //(Exception ex)
             {
-                From = new MailAddress(_config.GetValue<string>("ErrorReport:SmtpUsername")),
-                IsBodyHtml=true,                
-                Subject = "گزارش خطا در دمو ابزارهای فارسی‌یار"
-            };
-            mail.To.Add(_config.GetValue<string>("ErrorReport:ReportEmail"));            
-            mail.Body = $"<p dir='rtl'>" +
-                $"ورودی: {errorReportInputText} " +
-                $"<br/> " +
-                $"توضیحات:{errorReportComment}" +
-                $"<br/> " +
-                $"آدرس ابزار:{Request.Headers["Referer"].ToString()}"+
-                $"</p>";
+                _feedback = 2;
+            }
 
-            smtp.Send(mail);
-
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             return RedirectToAction("Index");
         }
+
+        private void CheckFeedbackNotif()
+        {
+            if(_feedback == 1)
+                _toastNotification.AddSuccessToastMessage("با تشکر از همکاری شما",
+                    new ToastrOptions()
+                    {
+                        SuccessTitle = "ارسال موفق گزارش"
+                    });
+            else if(_feedback == 2)
+                _toastNotification.AddErrorToastMessage("خطایی در ارسال گزارش به وجود آمد",
+                    new ToastrOptions()
+                    {
+                        ErrorMessage = "خطا"
+                    });
+
+            _feedback = 0;
+        }
+
         #endregion
     }
 }
