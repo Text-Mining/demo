@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NToastNotify;
-using NToastNotify.Libraries;
 
 namespace Textmining.Demo.Web
 {

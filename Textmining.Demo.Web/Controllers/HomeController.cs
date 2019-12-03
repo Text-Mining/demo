@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using Textmining.Demo.Web.Models;
 using NToastNotify;
-using NToastNotify.Libraries;
 
 namespace Textmining.Demo.Web.Controllers
 {
@@ -307,13 +306,13 @@ namespace Textmining.Demo.Web.Controllers
                 _toastNotification.AddSuccessToastMessage("با تشکر از همکاری شما",
                     new ToastrOptions()
                     {
-                        SuccessTitle = "ارسال موفق گزارش"
+                        Title = "ارسال موفق گزارش"
                     });
             else if(_feedback == 2)
                 _toastNotification.AddErrorToastMessage("خطایی در ارسال گزارش به وجود آمد",
                     new ToastrOptions()
                     {
-                        ErrorMessage = "خطا"
+                        Title = "خطا"
                     });
 
             _feedback = 0;
