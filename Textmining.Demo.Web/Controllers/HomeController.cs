@@ -288,7 +288,12 @@ namespace Textmining.Demo.Web.Controllers
                             $"آدرس ابزار:{Request.Headers["Referer"].ToString()}" +
                             $"</p>";
 
-                smtp.Send(mail);
+                //smtp.Send(mail);
+                smtp.SendCompleted += (s, e) => {
+                    smtp.Dispose();
+                    mail.Dispose();
+                };
+                smtp.SendAsync(mail, null);
                 _feedback = 1;
             }
             catch //(Exception ex)
