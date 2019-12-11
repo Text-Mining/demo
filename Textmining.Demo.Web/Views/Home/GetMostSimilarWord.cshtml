@@ -1,7 +1,7 @@
 ﻿@model Textmining.Demo.Web.Models.GetMostSimilarWordModel
 @{
-    ViewData["Title"] = "دریافت کلمات مشابه";
-    ViewData["Desc"] = "این ابزار کلمات مشابه کلمه ورودی را بر اساس تعداد دلخواه برمی‌گرداند";
+    ViewData["Title"] = "دریافت کلمات مرتبط";
+    ViewData["Desc"] = "این ابزار تعداد دلخواه از کلمات مرتبط با کلمه ورودی را بر اساس خروجی روش‌های تعبیه کلمات (رویکرد آماری) در پیکره متنی شبکه‌های اجتماعی برمی‌گرداند.";
 }
 
 
@@ -15,9 +15,9 @@
             <input type="text" asp-for="Word" class="form-control demo-form-input" value="روحانی" />
 
         </div>
-        <label>تعداد کلمات مشابه</label>
+        <label>تعداد کلمات مرتبط</label>
         <div class="form-group bmd-form-group is-filled">
-            <label class="bmd-label-floating">تعداد کلمات مشابه که در نتیجه برمی‌گردند</label>
+            <label class="bmd-label-floating">تعداد کلمات مرتبط که در نتیجه برمی‌گردند</label>
             <input asp-for="TopN" type="tel" min="1" max="20" step="1" value="10" class="form-control" />
         </div>
     </div>

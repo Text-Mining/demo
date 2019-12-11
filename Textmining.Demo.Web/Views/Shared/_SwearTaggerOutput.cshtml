@@ -15,7 +15,7 @@ else
             <tr>
                 <td>
                     <h5>
-                        کلمه
+                        عبارت
                     </h5>
                 </td>
                 <td>
@@ -28,7 +28,7 @@ else
             @foreach (KeyValuePair<string, string> word in Model)
             {
                 var badgeColor = word.Value == "MildSwearWord" ? "warning" : "danger";
-                var badgeTitle = word.Value == "MildSwearWord" ? "کلمه زشت" : "کلمه رکیک";
+                var badgeTitle = word.Value == "MildSwearWord" ? "عبارت دارای اهانت خفیف یا دووجهی" : "عبارت دارای اهانت شدید (کلمه رکیک)";
                 <tr>
                     <td>
                         @word.Key

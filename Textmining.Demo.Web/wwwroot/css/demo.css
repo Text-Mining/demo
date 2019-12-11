@@ -78,3 +78,14 @@ html[dir="rtl"] .sidebar {
     -webkit-animation: spin .8s linear infinite;
     animation: spin .8s linear infinite;
 }
+
+.menu-item-main {
+    float: right;
+    width: 30%;
+}
+
+.menu-item-alert {
+    /*margin-top: -0.25rem;*/
+    font-size: 80%;
+    color: #f44336;
+}

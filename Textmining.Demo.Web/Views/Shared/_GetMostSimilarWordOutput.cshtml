@@ -1,0 +1,17 @@
+﻿@model string[]
+@{
+    Layout = null;
+}
+@if (Model == null || !Model.Any())
+{
+    <span>این کلمه در پیکره ما وجود نداشت. لطفاً یک کلمه دیگر را وارد بفرمایید.</span>
+}
+else
+{
+    @foreach (string word in Model)
+    {
+        @word
+        <br/>
+    }
+}
+<partial name="_ErrorReportButton" />

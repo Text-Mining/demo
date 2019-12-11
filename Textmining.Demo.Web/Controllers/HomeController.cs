@@ -161,8 +161,11 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GetMostSimilarWord(GetMostSimilarWordModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
-            return PartialView("_ApiOutput");
+            //ViewData["Output"] = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
+            //return PartialView("_ApiOutput");
+            var result = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
+            var viewModel = JsonConvert.DeserializeObject<string[]>(result);
+            return PartialView("_GetMostSimilarWordOutput", viewModel);
         }
 
         #endregion
