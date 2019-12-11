@@ -17,11 +17,12 @@ namespace Textmining.Demo.Web.Models
     {
         public EditItem() { }
 
-        public EditItem(EditType editType, string suggestedText, string description)
+        public EditItem(EditType editType, string suggestedText, string description, int removeTokensCount = 0)
         {
             EditType = editType;
             SuggestedText = suggestedText;
             Description = description;
+            RemoveTokensCount = removeTokensCount;
         }
 
         /// <summary>
@@ -41,6 +42,12 @@ namespace Textmining.Demo.Web.Models
         /// </summary>
         /// <value>The description.</value>
         public string Description { get; set; }
+
+        /// <summary>
+        /// حذف چند عدد از توکن‌های قبل یا بعد
+        /// </summary>
+        /// <value>The remove tokens.</value>
+        public int RemoveTokensCount { get; set; }
     }
 
     /// <summary>
@@ -72,18 +79,6 @@ namespace Textmining.Demo.Web.Models
         /// </summary>
         /// <value>The original text.</value>
         public string OriginalText { get; set; }
-
-        /// <summary>
-        /// شکل نرمال‌سازی (استاندارد) شده کلمه (توکن) فعلی
-        /// </summary>
-        /// <value>The refine text.</value>
-        public string RefineText { get; private set; }
-
-        /// <summary>
-        /// تصمیم‌گیری انجام شده توسط کاربر برای اعمال یا نادیده گرفتن تغییرات پیشنهادی
-        /// </summary>
-        /// <value><c>true</c> if [apply change]; otherwise, <c>false</c>.</value>
-        public bool ApplyChange { get; set; }
 
         /// <summary>
         /// شکل جدید (اصلاح شده) توکن براساس تغییرات پیشنهاد شده
