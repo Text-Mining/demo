@@ -6,6 +6,7 @@ namespace Textmining.Demo.Web.Models
     {
         [Required(ErrorMessage = "الزامی")]
         public string Text { get; set; }
+        //public int SpellCheckerCandidateCount { get; set; }
         public string OutputText { get; set; }
     }
 }

@@ -28,44 +28,12 @@
         {
             title = "<span class='text-mute'>چند پیشنهاد وجود دارد:</span>";
             content = "<table style=\"width: 100%;\">";
-            string recomVal = string.Empty;
-            string recomComment = string.Empty;
-
             foreach (EditItem item in tokenInfo.EditList)
             {
-                if (item.EditType == EditType.CharReplace || item.EditType == EditType.SpaceCorrection)
-                {
-                    recomComment += item.Description + "، ";
-                    recomVal = item.SuggestedText;
-                }
-                else
-                {
-                    if (recomComment.Length > 0)
-                    {
-                        content += $"<tr><td style=\"padding-left:10px;font-weight:bold\" class=\"block\">{recomVal}</td><td class=\"block\">{recomComment.TrimEnd(' ', '،')}</td></tr>";
-                        recomComment = "";
-                    }
-                    string desc = item.EditType == EditType.SpellCorrection ? "اصلاح اشتباه املائی" : item.Description;
-                    content += $"<tr><td style=\"padding-left:10px;font-weight:bold\" class=\"block\">{item.SuggestedText}</td><td class=\"block\">{desc}</td></tr>";
-                }
+                string desc = item.EditType == EditType.SpellCorrection ? "اصلاح اشتباه املائی" : item.Description;
+                content += $"<tr><td style=\"padding-left:10px;font-weight:bold\" class=\"block\">{item.SuggestedText}</td><td class=\"block\">{desc}</td></tr>";
             }
-            if (recomComment.Length > 0)
-            {
-                if (content.Contains("<tr>"))
-                {
-                    content += $"<tr><td style=\"padding-left:10px;font-weight:bold\" class=\"block\">{recomVal}</td><td class=\"block\">{recomComment.TrimEnd(' ', '،')}</td></tr>";
-                    content += "</table>";
-                }
-                else
-                {
-                    title = $"<span class='text-mute'>{recomVal}</span>";
-                    content = recomComment.TrimEnd(' ', '،');
-                }
-            }
-            else
-            {
-                content += "</table>";
-            }
+            content += "</table>";
         }
 		<span class="has-suggestions"
 			  data-trigger="hover"
