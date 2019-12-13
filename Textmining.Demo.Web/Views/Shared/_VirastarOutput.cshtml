@@ -1,21 +1,21 @@
 ﻿@model List<TokenInfo>
 @{
     Layout = null;
-
 }
 <style>
     .has-suggestions {
-        border-bottom: 2px solid #ff0000;
+        border-bottom: 2px solid #f44336;
+        -ms-border-radius: 5px;
         border-radius: 5px;
-        margin-left: 5px;
+        /*margin-left: 5px;*/
     }
-    /*td{
-        border:1px solid #000;
-    }*/
-    /*tr td:last-child{
-        width:1%;
-        white-space:nowrap;
-    }*/
+
+    .has-refine {
+        border-bottom: 2px solid #00C853;
+        -ms-border-radius: 5px;
+        border-radius: 5px;
+        /*margin-left: 5px;*/
+    }
 </style>
 
 @foreach (var tokenInfo in Model)
@@ -24,7 +24,7 @@
     {
         var title = $"<span class='text-mute'>{tokenInfo.EditList.Last().SuggestedText}</span>";
         var content = tokenInfo.EditList.Last().Description;
-        if(tokenInfo.EditList.Count > 1)
+        if (tokenInfo.EditList.Count > 1)
         {
             title = "<span class='text-mute'>چند پیشنهاد وجود دارد:</span>";
             content = "<table style=\"width: 100%;\">";
@@ -35,23 +35,34 @@
             }
             content += "</table>";
         }
-		<span class="has-suggestions"
-			  data-trigger="hover"
-			  data-toggle="popover"
-			  data-placement="top"
-			  data-html="true"
-			  title="@title"
-			  data-content="@content">
-			@tokenInfo.OriginalText
-		</span>
-    }
-    else
-    {
-        <span class="">
+        var style = tokenInfo.EditList.Any(ed => ed.EditType == EditType.SpellCorrection || ed.EditType == EditType.WordSuggestion)
+                    ? "has-suggestions"
+                    : "has-refine";
+        <span class="@style"
+              data-trigger="hover"
+              data-toggle="popover"
+              data-placement="top"
+              data-html="true"
+              style="display:inline-block;"
+              title="@title"
+              data-content="@content">
             @tokenInfo.OriginalText
         </span>
     }
+    else
+    {
+        <span class="" style="display:inline-block;">
+            @tokenInfo.OriginalText
+        </span>
+    }
+
+    if (@tokenInfo.OriginalText.Contains('\n'))
+    {
+        <br/>
+    }
 }
+
+
 
 <partial name="_ErrorReportButton" />
 

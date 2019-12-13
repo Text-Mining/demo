@@ -19,10 +19,25 @@
 
         </div>
         <label>تعداد کلمات خروجی</label>
-
         <div class="form-group bmd-form-group is-filled">
             <label class="bmd-label-floating">تعداد کلمات کلیدی در خروجی</label>
             <input asp-for="ResultKeywordCount" type="tel" min="1" max="10" step="1" value="5" class="form-control" />
+        </div>
+
+        <label>حداکثر تعداد کلمات هر عبارت کلیدی</label>
+        <div class="form-group bmd-form-group is-filled">
+            <label class="bmd-label-floating">تعداد کلمات (اجزای) هر چندتایی (N-gram) خروجی  (بین 1 تا 5)</label>
+            <input asp-for="MaxWordCount" type="tel" min="1" max="5" step="1" value="3" class="form-control" />
+        </div>
+
+        <label>روش انجام</label>
+        <div class="form-group bmd-form-group is-filled">
+            <label class="bmd-label-floating">رویکرد استخراج کلمات کلیدی</label>
+            <select asp-for="Method" class="form-control">
+                <option value="TFIDF" title="term frequency–inverse document frequency" selected>TF-IDF</option>
+                <option value="RAKE" title="Rapid Automatic Keyword Extraction">RAKE</option>
+                <option value="KPMiner" title="keyphrase extraction model">KP-Miner</option>
+            </select>
         </div>
 
     </div>

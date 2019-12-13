@@ -181,9 +181,10 @@ namespace Textmining.Demo.Web.Controllers
         public IActionResult KeywordExtraction(KeywordExtractionModel model)
         {
             model.MinWordLength = 3;
-            model.MaxWordCount = 3;
+            //model.MaxWordCount = 3;
             model.MinKeywordFrequency = 1;
-            model.Method = "TFIDF";
+            //model.Method = "TFIDF";
+            model.MaxWordCount = Math.Min(5, Math.Max(1, model.MaxWordCount));
 
             var apiOutput = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
 
