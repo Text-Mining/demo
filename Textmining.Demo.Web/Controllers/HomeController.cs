@@ -207,9 +207,13 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Virastar(VirastarModel model)
         {
+            model.SpellCheckerCandidateCount = Math.Min(5, Math.Max(1, model.SpellCheckerCandidateCount));
+
             var result = CallApi($"{_urlPath}Virastar/ScanText", model);
 
             var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result);
+            foreach (TokenInfo tokenInfo in viewModel)
+                tokenInfo.EditList.Reverse();
 
             return PartialView("_VirastarOutput", viewModel);
         }
