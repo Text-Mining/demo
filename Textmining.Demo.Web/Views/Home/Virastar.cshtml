@@ -1,7 +1,7 @@
 ﻿@model Textmining.Demo.Web.Models.VirastarModel
 @{
     ViewData["Title"] = "ویراستار";
-    ViewData["Desc"] = "بررسی و ویراستاری متن ورودی و پیشنهاد اصلاحات مربوط به نویسه‌ها، فاصله و نیم‌فاصله‌ها، جایگزینی طبق دستور زبان و آیین‌نامه مصوب فرهنگستان و همچنین غلط‌یاب املایی در متن فارسی ";
+    ViewData["Desc"] = "بررسی و ویراستاری متن ورودی و پیشنهاد اصلاحات مربوط به نویسه‌ها، فاصله و نیم‌فاصله‌ها، جایگزینی طبق دستور زبان و آیین‌نامه مصوب فرهنگستان و همچنین غلط‌یاب املائی و اشتباهات از نوع کلمه واقعی و ... در متن فارسی";
 
 }
 
@@ -23,7 +23,7 @@
         <label>تعداد پیشنهادات غلط‌یاب</label>
 
         <div class="form-group bmd-form-group is-filled">
-            <label class="bmd-label-floating">تعداد پیشنهادات غلط‌یاب در خروجی (بین 1 تا 5)</label>
+            <label class="bmd-label-floating">تعداد پیشنهادات غلط‌یاب در خروجی (بین ۱ تا ۵)</label>
             <input asp-for="SpellCheckerCandidateCount" type="tel" min="1" max="10" step="1" value="3" class="form-control" />
         </div>
     </div>

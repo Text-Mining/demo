@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://demo.text-mining.ir/sitemap.xml
+Sitemap: http://text-mining.ir/sitemap.xml
+Sitemap: https://blog.text-mining.ir/sitemap/sitemap.xml

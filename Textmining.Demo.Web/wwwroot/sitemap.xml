@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type='text/xsl' href='sitemap.xsl'?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>http://demo.text-mining.ir/Home/Virastar</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/SpellCorrector</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/FormalConverter</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/SwearWordTagger</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/SentimentClassifier</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/KeywordExtraction</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/NamedEntityRecognitionDetect</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/LanguageDetectionPredict</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/LemmatizeText2Text</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://demo.text-mining.ir/Home/GetMostSimilarWord</loc>
+  <lastmod>2019-12-18T05:10:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>
