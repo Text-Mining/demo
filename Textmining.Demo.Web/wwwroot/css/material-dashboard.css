@@ -231,7 +231,7 @@ th {
 
 label {
   display: inline-block;
-  margin-bottom: .5rem;
+  /*margin-bottom: .5rem;*/
 }
 
 button {
@@ -635,7 +635,7 @@ th {
 
 label {
   display: inline-block;
-  margin-bottom: .5rem;
+  /*margin-bottom: .5rem;*/
 }
 
 button {
@@ -12558,7 +12558,7 @@ fieldset[disabled][disabled] .has-rose .form-control,
 .bmd-form-group [class*=' bmd-label'].bmd-label-floating {
   will-change: left, top, contents;
   margin: 0;
-  line-height: 1.4;
+  line-height: 2.4;
   font-weight: 400;
 }
 

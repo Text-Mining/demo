@@ -89,3 +89,9 @@ html[dir="rtl"] .sidebar {
     font-size: 80%;
     color: #f44336;
 }
+
+.container-center {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}

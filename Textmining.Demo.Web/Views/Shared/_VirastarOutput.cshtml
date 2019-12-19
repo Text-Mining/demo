@@ -9,16 +9,19 @@
         border-radius: 5px;
         /*margin-left: 5px;*/
     }
+
     .has-refine {
         border-bottom: 2px solid #00C853;
         -ms-border-radius: 5px;
         border-radius: 5px;
     }
+
     .has-suggestions-real {
         border-bottom: 2px solid #40c4ff;
         -ms-border-radius: 5px;
         border-radius: 5px;
     }
+
     tr td:first-child {
         padding-left: 10px;
         font-weight: bold;
@@ -72,16 +75,18 @@
 
     if (@tokenInfo.OriginalText.Contains('\n'))
     {
-        <br/>
+        <br />
     }
 }
 
-
-
-<partial name="_ErrorReportButton" />
 <div style="font-size: 80%">
-    چنانچه ابزار موردنظر خروجی مناسبی ندارد، لطفاً کلید «گزارش ایراد در خروجی» را زده و خروجی مورد انتظار خود را برای ما بفرستید. مطمئن باشید گزارش شما مورد توجه تیم متن‌کاوی فارسی‌یار بوده و روی بهبود نتایج ابزارهای پردازش متن فارسی تاثیرگذار است.
+    <br />
+    <span>راهنما: </span><span> </span>
+    <span class="has-refine">اصلاح نویسه‌های غیراستاندارد یا فاصله‌گذاری</span><span> ، </span>
+    <span class="has-suggestions-real">پیشنهاد جایگزین کردن واژه یا پیوسته‌نویسی</span><span> ، </span>
+    <span class="has-suggestions">اصلاح اشتباهات املائی یا تایپی</span>
 </div>
+<partial name="_ErrorReportButton" />
 
 <script>
 
