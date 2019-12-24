@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>0.9.1</Version>
+    <Version>0.10.0</Version>
     <UserSecretsId>9ec224c9-3006-4886-b3e2-2f8ab3e3f1e0</UserSecretsId>
   </PropertyGroup>
 
@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="NToastNotify" Version="5.0.10" />
     <PackageReference Include="RestSharp" Version="106.6.10" />
   </ItemGroup>

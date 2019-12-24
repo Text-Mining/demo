@@ -14,14 +14,19 @@ namespace Textmining.Demo.Web.Controllers
     public class HomeController : Controller
     {
         #region Constructor and Index Action
-        private readonly string _urlPath = "https://api.text-mining.ir/api/";
+
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly string _urlPath;
         private readonly IConfiguration _config;
         private readonly IToastNotification _toastNotification;
         private static int _feedback;
+        private static string _token;
 
         public HomeController(IConfiguration config, IToastNotification toastNotification)
         {
             _config = config;
+            _token = _config.GetValue<string>("TextMiningApiToken");
+            _urlPath = _config.GetValue<string>("ApiUrl"); //"https://api.text-mining.ir/api/";
             _toastNotification = toastNotification;
         }
 
@@ -221,12 +226,11 @@ namespace Textmining.Demo.Web.Controllers
 
         #region Common Methods   
 
-        private static string _token;
         private string GetJWTToken()
         {
             if (!string.IsNullOrEmpty(_token))
                 return _token;
-
+            
             var textMiningApiKey = _config.GetValue<string>("TextMiningApiKey");
             string jwtToken = string.Empty;
             var client = new RestClient($"{_urlPath}Token/GetToken?apikey={textMiningApiKey}");
@@ -237,6 +241,7 @@ namespace Textmining.Demo.Web.Controllers
             {
                 _token = jwtToken = (string)JObject.Parse(response.Content)["token"];
             }
+
             return jwtToken;
         }
 
@@ -244,6 +249,9 @@ namespace Textmining.Demo.Web.Controllers
         {
             try
             {
+                //_logger.Debug($"Start Call: {apiUrl}");
+                //var timer = System.Diagnostics.Stopwatch.StartNew();
+
                 //ToDo: check model validation
                 var client = new RestClient(apiUrl);
                 var request = new RestRequest(Method.POST);
@@ -254,11 +262,16 @@ namespace Textmining.Demo.Web.Controllers
                 IRestResponse response = client.Execute(request);
                 if (!response.IsSuccessful)
                     _token = null;
+
+                //timer.Stop();
+                //_logger.Debug($"End Call: {apiUrl}");
+
                 return response.Content;
             }
             catch (Exception ex)
             {
                 //ToDo: better error message
+                _logger.Error(ex);
                 return $"Error: {ex.Message}";
             }
         }
