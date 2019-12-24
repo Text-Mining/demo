@@ -221,8 +221,12 @@ namespace Textmining.Demo.Web.Controllers
 
         #region Common Methods   
 
+        private static string _token;
         private string GetJWTToken()
         {
+            if (!string.IsNullOrEmpty(_token))
+                return _token;
+
             var textMiningApiKey = _config.GetValue<string>("TextMiningApiKey");
             string jwtToken = string.Empty;
             var client = new RestClient($"{_urlPath}Token/GetToken?apikey={textMiningApiKey}");
@@ -231,7 +235,7 @@ namespace Textmining.Demo.Web.Controllers
             IRestResponse response = client.Execute(request);
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                jwtToken = (string)JObject.Parse(response.Content)["token"];
+                _token = jwtToken = (string)JObject.Parse(response.Content)["token"];
             }
             return jwtToken;
         }
@@ -248,12 +252,14 @@ namespace Textmining.Demo.Web.Controllers
                 request.AddHeader("Content-Type", "application/json");
                 request.AddParameter("input", ObjectModelToString(inputModel), ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
+                if (!response.IsSuccessful)
+                    _token = null;
                 return response.Content;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //ToDo: better error message
-                return "Error";
+                return $"Error: {ex.Message}";
             }
         }
 
