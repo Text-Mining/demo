@@ -53,7 +53,7 @@
             content += "</table>";
         }
         var style = tokenInfo.EditList.Any(ed => ed.EditType == EditType.SpellCorrection || ed.EditType == EditType.WordSuggestion)
-                    ? (tokenInfo.EditList.LastOrDefault().Description.StartsWith("پیشنهاد") ? "has-suggestions-real" : "has-suggestions")
+                    ? (tokenInfo.EditList.FirstOrDefault().Description.StartsWith("پیشنهاد") ? "has-suggestions-real" : "has-suggestions")
                     : "has-refine";
         <span class="@style"
               data-trigger="hover"
@@ -81,7 +81,7 @@
 
 <div style="font-size: 80%">
     <br />
-    <span>راهنما: </span><span> </span>
+    <span style="font-weight: bold; margin-left: 8px">راهنما: </span><span> </span>
     <span class="has-refine">اصلاح نویسه‌های غیراستاندارد یا فاصله‌گذاری</span><span> ، </span>
     <span class="has-suggestions-real">پیشنهاد جایگزین کردن واژه یا پیوسته‌نویسی</span><span> ، </span>
     <span class="has-suggestions">اصلاح اشتباهات املائی یا تایپی</span>

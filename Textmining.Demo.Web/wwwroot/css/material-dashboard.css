@@ -12557,8 +12557,8 @@ fieldset[disabled][disabled] .has-rose .form-control,
 .bmd-form-group [class^='bmd-label'].bmd-label-floating,
 .bmd-form-group [class*=' bmd-label'].bmd-label-floating {
   will-change: left, top, contents;
-  margin: 0;
-  line-height: 2.4;
+  margin: 8px;
+  line-height: 1.4;
   font-weight: 400;
 }
 

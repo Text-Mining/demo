@@ -249,9 +249,6 @@ namespace Textmining.Demo.Web.Controllers
         {
             try
             {
-                //_logger.Debug($"Start Call: {apiUrl}");
-                //var timer = System.Diagnostics.Stopwatch.StartNew();
-
                 //ToDo: check model validation
                 var client = new RestClient(apiUrl);
                 var request = new RestRequest(Method.POST);
@@ -262,10 +259,6 @@ namespace Textmining.Demo.Web.Controllers
                 IRestResponse response = client.Execute(request);
                 if (!response.IsSuccessful)
                     _token = null;
-
-                //timer.Stop();
-                //_logger.Debug($"End Call: {apiUrl}");
-
                 return response.Content;
             }
             catch (Exception ex)
