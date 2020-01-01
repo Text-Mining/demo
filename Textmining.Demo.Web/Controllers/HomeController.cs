@@ -48,8 +48,18 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult FormalConverter(ApiViewModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
-            return PartialView("_ApiOutput");
+            var apiOutput = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
+
+            if (apiOutput.Item2)
+            {
+                ViewData["Output"] = apiOutput.Item1;
+                return PartialView("_ApiOutput");
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
         }
 
         #endregion
@@ -64,8 +74,18 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SpellCorrector(SpellCheckerModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
-            return PartialView("_ApiOutput");
+            var apiOutput = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
+
+            if (apiOutput.Item2)
+            {
+                ViewData["Output"] = apiOutput.Item1;
+                return PartialView("_ApiOutput");
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
         }
 
         #endregion
@@ -83,9 +103,16 @@ namespace Textmining.Demo.Web.Controllers
         {
             var apiOutput = CallApi($"{_urlPath}TextRefinement/SwearWordTagger", model.InputText);
 
-            var viewModel = JsonConvert.DeserializeObject<Dictionary<string, string>>(apiOutput);
-
-            return PartialView("_SwearTaggerOutput", viewModel);
+            if (apiOutput.Item2)
+            {
+                var viewModel = JsonConvert.DeserializeObject<Dictionary<string, string>>(apiOutput.Item1);
+                return PartialView("_SwearTaggerOutput", viewModel);
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
         }
 
         #endregion
@@ -101,10 +128,16 @@ namespace Textmining.Demo.Web.Controllers
         public IActionResult SentimentClassifier(ApiViewModel model)
         {
             var apiOutput = CallApi($"{_urlPath}SentimentAnalyzer/SentimentClassifier", model.InputText);
-
-            var viewModel = JsonConvert.DeserializeObject<int>(apiOutput);
-
-            return PartialView("_SentimentClassifierOutput", viewModel);
+            if (apiOutput.Item2)
+            {
+                var viewModel = JsonConvert.DeserializeObject<int>(apiOutput.Item1);
+                return PartialView("_SentimentClassifierOutput", viewModel);
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
         }
         #endregion
 
@@ -120,9 +153,16 @@ namespace Textmining.Demo.Web.Controllers
         {
             var apiOutput = CallApi($"{_urlPath}NamedEntityRecognition/Detect", model.InputText);
 
-            var viewModel = JsonConvert.DeserializeObject<List<Phrase>>(apiOutput);
-
-            return PartialView("_NamedEntityRecognitionDetectOutput", viewModel);
+            if (apiOutput.Item2)
+            {
+                var viewModel = JsonConvert.DeserializeObject<List<Phrase>>(apiOutput.Item1);
+                return PartialView("_NamedEntityRecognitionDetectOutput", viewModel);
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
         }
         #endregion
 
@@ -136,8 +176,17 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LanguageDetectionPredict(ApiViewModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}LanguageDetection/Predict", model.InputText);
-            return PartialView("_ApiOutput");
+            var result = CallApi($"{_urlPath}LanguageDetection/Predict", model.InputText);
+            if (result.Item2)
+            {
+                ViewData["Output"] = result.Item1;
+                return PartialView("_ApiOutput");
+            }
+            else
+            {
+                ShowError(result.Item1);
+                return new EmptyResult();
+            }
         }
         #endregion
 
@@ -151,8 +200,17 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LemmatizeText2Text(ApiViewModel model)
         {
-            ViewData["Output"] = CallApi($"{_urlPath}Stemmer/LemmatizeText2Text", model.InputText);
-            return PartialView("_ApiOutput");
+            var result = CallApi($"{_urlPath}Stemmer/LemmatizeText2Text", model.InputText);
+            if (result.Item2)
+            {
+                ViewData["Output"] = result.Item1;
+                return PartialView("_ApiOutput");
+            }
+            else
+            {
+                ShowError(result.Item1);
+                return new EmptyResult();
+            }
         }
         #endregion
 
@@ -169,8 +227,16 @@ namespace Textmining.Demo.Web.Controllers
             //ViewData["Output"] = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
             //return PartialView("_ApiOutput");
             var result = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
-            var viewModel = JsonConvert.DeserializeObject<string[]>(result);
-            return PartialView("_GetMostSimilarWordOutput", viewModel);
+            if (result.Item2)
+            {
+                var viewModel = JsonConvert.DeserializeObject<string[]>(result.Item1);
+                return PartialView("_GetMostSimilarWordOutput", viewModel);
+            }
+            else
+            {
+                ShowError(result.Item1);
+                return new EmptyResult();
+            }
         }
 
         #endregion
@@ -193,9 +259,16 @@ namespace Textmining.Demo.Web.Controllers
 
             var apiOutput = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
 
-            var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput);
-
-            return PartialView("_KeywordExtractionOutput", viewModel);
+            if (apiOutput.Item2)
+            {
+                var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput.Item1);
+                return PartialView("_KeywordExtractionOutput", viewModel);
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
         }
 
         #endregion
@@ -207,7 +280,7 @@ namespace Textmining.Demo.Web.Controllers
 
             return View();
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Virastar(VirastarModel model)
@@ -216,11 +289,19 @@ namespace Textmining.Demo.Web.Controllers
 
             var result = CallApi($"{_urlPath}Virastar/ScanText", model);
 
-            var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result);
-            foreach (TokenInfo tokenInfo in viewModel)
-                tokenInfo.EditList.Reverse();
+            if (result.Item2)
+            {
+                var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result.Item1);
+                foreach (TokenInfo tokenInfo in viewModel)
+                    tokenInfo.EditList.Reverse();
 
-            return PartialView("_VirastarOutput", viewModel);
+                return PartialView("_VirastarOutput", viewModel);
+            }
+            else
+            {
+                ShowError(result.Item1);
+                return new EmptyResult();
+            }
         }
         #endregion
 
@@ -245,7 +326,7 @@ namespace Textmining.Demo.Web.Controllers
             return jwtToken;
         }
 
-        private string CallApi(string apiUrl, object inputModel)
+        private (string, bool) CallApi(string apiUrl, object inputModel)
         {
             try
             {
@@ -257,15 +338,16 @@ namespace Textmining.Demo.Web.Controllers
                 request.AddHeader("Content-Type", "application/json");
                 request.AddParameter("input", ObjectModelToString(inputModel), ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
+
                 if (!response.IsSuccessful)
                     _token = null;
-                return response.Content;
+                return (response.Content, response.IsSuccessful);
             }
             catch (Exception ex)
             {
                 //ToDo: better error message
                 _logger.Error(ex);
-                return $"Error: {ex.Message}";
+                return ($"error: {ex.Message}", false);
             }
         }
 
@@ -275,7 +357,35 @@ namespace Textmining.Demo.Web.Controllers
             return jsonStr;
         }
 
+        private void ShowError(string msg)
+        {
+            try
+            {
+                var viewModel = JObject.Parse(msg);
+                
+                string errorMessage;
+                if(viewModel.ContainsKey("error"))
+                    errorMessage = viewModel["error"].Value<string>();
+                else if (viewModel.ContainsKey("message"))
+                    errorMessage = viewModel["message"].Value<string>();
+                else errorMessage = viewModel.First.First[0].Value<string>();
 
+                _toastNotification.AddErrorToastMessage(errorMessage,
+                    new ToastrOptions()
+                    {
+                        Title = "خطا"
+                    });
+            }
+            catch
+            {
+                _toastNotification.AddErrorToastMessage(msg,
+                    new ToastrOptions()
+                    {
+                        Title = "خطا"
+                    });
+            }
+        }
+        
         #endregion
 
         #region Report Error 
@@ -321,7 +431,6 @@ namespace Textmining.Demo.Web.Controllers
                 _feedback = 2;
             }
 
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             return RedirectToAction("Index");
         }
 
