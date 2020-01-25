@@ -52,8 +52,10 @@
             }
             content += "</table>";
         }
-        var style = tokenInfo.EditList.Any(ed => ed.EditType == EditType.SpellCorrection || ed.EditType == EditType.WordSuggestion)
-                    ? (tokenInfo.EditList.FirstOrDefault().Description.StartsWith("پیشنهاد") ? "has-suggestions-real" : "has-suggestions")
+        var firstEd = tokenInfo.EditList.FirstOrDefault();
+        
+        var style = firstEd!=null && tokenInfo.EditList.Any(ed => ed.EditType == EditType.SpellCorrection || ed.EditType == EditType.WordSuggestion)
+                    ? (firstEd.Description.StartsWith("پیشنهاد") || firstEd.Description.StartsWith("شکل صحیح کلمه") ? "has-suggestions-real" : "has-suggestions")
                     : "has-refine";
         <span class="@style"
               data-trigger="hover"
