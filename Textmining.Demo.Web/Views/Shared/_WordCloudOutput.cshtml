@@ -1,0 +1,15 @@
+﻿@model string
+@{
+    Layout = null;
+}
+<style>
+    .responsive {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<div>
+    <img class="responsive" src="@Url.Content(Model)" />
+</div>
+<partial name="_ErrorReportButton" />

@@ -263,3 +263,4 @@ __pycache__/
 *.pyc
 
 .DS_Store
+/Textmining.Demo.Web/wwwroot/wordcloud

@@ -5,7 +5,13 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mail;
+using System.Text;
+using Microsoft.AspNetCore.Hosting;
 using Textmining.Demo.Web.Models;
 using NToastNotify;
 
@@ -21,10 +27,12 @@ namespace Textmining.Demo.Web.Controllers
         private readonly IToastNotification _toastNotification;
         private static int _feedback;
         private static string _token;
+        private readonly string _currentPath;
 
-        public HomeController(IConfiguration config, IToastNotification toastNotification)
+        public HomeController(IConfiguration config, IHostingEnvironment env, IToastNotification toastNotification)
         {
             _config = config;
+            _currentPath = env.WebRootPath;
             _token = _config.GetValue<string>("TextMiningApiToken");
             _urlPath = _config.GetValue<string>("ApiUrl"); //"https://api.text-mining.ir/api/";
             _toastNotification = toastNotification;
@@ -300,6 +308,50 @@ namespace Textmining.Demo.Web.Controllers
             else
             {
                 ShowError(result.Item1);
+                return new EmptyResult();
+            }
+        }
+        #endregion
+
+        #region WordCloud
+        public IActionResult WordCloud()
+        {
+            CheckFeedbackNotif();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult WordCloud(WordCloudModel model)
+        {
+            try
+            {
+                string jsonStr = JsonConvert.SerializeObject(new
+                    {
+                        Words = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries),
+                        Theme = model.Theme,
+                        //FontName = "Samim"
+                    }
+                );
+
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GetJWTToken());
+                var response = client.PostAsync($"{_urlPath}InformationRetrieval/WordCloudGeneration",
+                    new StringContent(jsonStr, Encoding.UTF8, "application/json")).Result;
+                var bytesArray = response.Content.ReadAsByteArrayAsync().Result;
+                using (var ms = new MemoryStream(bytesArray))
+                {
+                    Image image = Image.FromStream(ms);
+                    string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".jpg";
+                    image.Save(Path.Combine(_currentPath, "wordcloud", fileName));
+                    return PartialView("_WordCloudOutput", "~/wordcloud/" + fileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                ShowError("خطا در ترسیم ابر کلمات");
                 return new EmptyResult();
             }
         }
