@@ -2,6 +2,6 @@
     Layout = null;
 }
 
-@Html.Raw(ViewData["Output"].ToString().Replace("\\r\\n", "<br/>"))
+@Html.Raw(ViewData["Output"].ToString().Replace("\\r\\n", "<br/>").Trim('"'))
 
 <partial name="_ErrorReportButton" />

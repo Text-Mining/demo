@@ -35,17 +35,22 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" asp-action="WordCloud" asp-controller="Home">
-                <i class="material-icons">cloud</i>
+            <a class="nav-link" asp-action="Summarization" asp-controller="Home">
+                <i class="material-icons">text_fields</i>
                 <p style="float: right">
-                    ترسیم ابر کلمات
-                    <div class="menu-item-alert">(جدید)</div>
+                    خلاصه‌سازی متن<div class="menu-item-alert">(جدید)</div>
                 </p>
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" asp-action="WordCloud" asp-controller="Home">
+                <i class="material-icons">cloud</i>
+                <p>ترسیم ابر کلمات</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" asp-action="NamedEntityRecognitionDetect" asp-controller="Home">
-                <i class="material-icons">line_style</i>
+                <i class="material-icons">library_books</i>
                 <p>شناسایی موجودیت‌های نام‌دار</p>
             </a>
         </li>
@@ -57,7 +62,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-action="LemmatizeText2Text" asp-controller="Home">
-                <i class="material-icons">library_books</i>
+                <i class="material-icons">line_style</i>
                 <p>ریشه‌یابی متن</p>
             </a>
         </li>

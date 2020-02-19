@@ -281,6 +281,34 @@ namespace Textmining.Demo.Web.Controllers
 
         #endregion
 
+        #region Summarization
+        public IActionResult Summarization()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Summarization(SummarizationModel model)
+        {
+            model.SummaryWordCount = Math.Min(1000, Math.Max(10, model.SummaryWordCount));
+
+            var apiOutput = CallApi($"{_urlPath}InformationRetrieval/Summarize", model);
+
+            if (apiOutput.Item2)
+            {
+                ViewData["Output"] = apiOutput.Item1;
+                return PartialView("_ApiOutput");
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
+        }
+
+        #endregion
+
         #region Virastar
         public IActionResult Virastar()
         {

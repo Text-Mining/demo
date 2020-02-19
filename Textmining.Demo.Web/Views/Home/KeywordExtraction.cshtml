@@ -1,7 +1,7 @@
 ﻿@model Textmining.Demo.Web.Models.KeywordExtractionModel
 @{
     ViewData["Title"] = "استخراج کلمات کلیدی متن";
-    ViewData["Desc"] = "این ابزار کلمات کلیدی متن را با سه رویکرد TF-IDF، RAKE و KP-Miner استخراج می‌کند.";
+    ViewData["Desc"] = "این ابزار کلمات کلیدی متن را با پنج رویکرد TF-IDF، RAKE، KP-Miner، TextRank و FNG استخراج می‌کند.";
 
 }
 
@@ -36,7 +36,9 @@
             <select asp-for="Method" class="form-control">
                 <option value="TFIDF" title="term frequency–inverse document frequency" selected>TF-IDF</option>
                 <option value="RAKE" title="Rapid Automatic Keyword Extraction">RAKE</option>
-                <option value="KPMiner" title="keyphrase extraction model">KP-Miner</option>
+                <option value="KPMiner" title="KeyPhrase extraction model">KP-Miner</option>
+                <option value="TextRank" title="Text Rank (graph-base approach)">TextRank</option>
+                <option value="FNG" title="Most Frequent N-Grams">Freq N-Grams</option>
             </select>
         </div>
 
