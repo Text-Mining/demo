@@ -65,31 +65,29 @@
                   data-html="true"
                   style=""
                   title="@title"
-                  data-content="@content">@tokenInfo.OriginalText</span>
-            }
+                  data-content="@content">@tokenInfo.OriginalText</span><!--
+            -->}
             else
-            {
-                <span class="" style="">@tokenInfo.OriginalText</span>
-            }
+            {@tokenInfo.OriginalText}
 
-            if (@tokenInfo.OriginalText.Contains('\n'))
-            {
-                <br />
-            }
+        if (@tokenInfo.OriginalText.Contains('\n'))
+        {
+            <br />
         }
+    }
 </div>
-    <div style="font-size: 80%">
-        <br />
-        <span style="font-weight: bold; margin-left: 8px">راهنما: </span><span> </span>
-        <span class="has-refine">اصلاح نویسه‌های غیراستاندارد یا فاصله‌گذاری</span><span> ، </span>
-        <span class="has-suggestions-real">پیشنهاد جایگزین کردن واژه یا پیوسته‌نویسی</span><span> ، </span>
-        <span class="has-suggestions">اصلاح اشتباهات املائی یا تایپی</span>
-    </div>
-    <partial name="_ErrorReportButton" />
+<div style="font-size: 80%">
+    <br />
+    <span style="font-weight: bold; margin-left: 8px">راهنما: </span><span> </span>
+    <span class="has-refine">اصلاح نویسه‌های غیراستاندارد یا فاصله‌گذاری</span><span> ، </span>
+    <span class="has-suggestions-real">پیشنهاد جایگزین کردن واژه یا پیوسته‌نویسی</span><span> ، </span>
+    <span class="has-suggestions">اصلاح اشتباهات املائی یا تایپی</span>
+</div>
+<partial name="_ErrorReportButton" />
 
-    <script>
+<script>
 
-        $(function () {
-            $('span[data-toggle="popover"]').popover();
-        })
-    </script>
+    $(function () {
+        $('span[data-toggle="popover"]').popover();
+    })
+</script>
