@@ -34,65 +34,62 @@
         font-size: 80%;
     }
 </style>
-
-@foreach (var tokenInfo in Model)
-{
-    if (tokenInfo.IsChanged)
+<div style="display: inline-block">
+    @foreach (var tokenInfo in Model)
     {
-        var title = $"<span class='text-mute'>{tokenInfo.EditList.Last().SuggestedText}</span>";
-        var content = tokenInfo.EditList.Last().Description;
-        if (tokenInfo.EditList.Count > 1)
+
+        if (tokenInfo.IsChanged)
         {
-            title = "<span class='text-mute'>چند پیشنهاد وجود دارد:</span>";
-            content = "<table style=\"width: 100%;\">";
-            foreach (EditItem item in tokenInfo.EditList)
+            var title = $"<span class='text-mute'>{tokenInfo.EditList.Last().SuggestedText}</span>";
+            var content = tokenInfo.EditList.Last().Description;
+            if (tokenInfo.EditList.Count > 1)
             {
-                //string desc = item.EditType == EditType.SpellCorrection ? "اصلاح اشتباه املائی" : item.Description;
-                content += $"<tr><td class=\"block\">{item.SuggestedText}</td><td class=\"block\">{item.Description}</td></tr>";
+                title = "<span class='text-mute'>چند پیشنهاد وجود دارد:</span>";
+                content = "<table style=\"width: 100%;\">";
+                foreach (EditItem item in tokenInfo.EditList)
+                {
+                    //string desc = item.EditType == EditType.SpellCorrection ? "اصلاح اشتباه املائی" : item.Description;
+                    content += $"<tr><td class=\"block\">{item.SuggestedText}</td><td class=\"block\">{item.Description}</td></tr>";
+                }
+                content += "</table>";
             }
-            content += "</table>";
+            var firstEd = tokenInfo.EditList.FirstOrDefault();
+
+            var style = firstEd != null && tokenInfo.EditList.Any(ed => ed.EditType == EditType.SpellCorrection || ed.EditType == EditType.WordSuggestion)
+                        ? (firstEd.Description.StartsWith("پیشنهاد") || firstEd.Description.StartsWith("شکل صحیح کلمه") ? "has-suggestions-real" : "has-suggestions")
+                        : "has-refine";
+            <span class="@style"
+                  data-trigger="hover"
+                  data-toggle="popover"
+                  data-placement="top"
+                  data-html="true"
+                  style=""
+                  title="@title"
+                  data-content="@content">@tokenInfo.OriginalText</span>
+            }
+            else
+            {
+                <span class="" style="">@tokenInfo.OriginalText</span>
+            }
+
+            if (@tokenInfo.OriginalText.Contains('\n'))
+            {
+                <br />
+            }
         }
-        var firstEd = tokenInfo.EditList.FirstOrDefault();
-        
-        var style = firstEd!=null && tokenInfo.EditList.Any(ed => ed.EditType == EditType.SpellCorrection || ed.EditType == EditType.WordSuggestion)
-                    ? (firstEd.Description.StartsWith("پیشنهاد") || firstEd.Description.StartsWith("شکل صحیح کلمه") ? "has-suggestions-real" : "has-suggestions")
-                    : "has-refine";
-        <span class="@style"
-              data-trigger="hover"
-              data-toggle="popover"
-              data-placement="top"
-              data-html="true"
-              style="display:inline-block;"
-              title="@title"
-              data-content="@content">
-            @tokenInfo.OriginalText
-        </span>
-    }
-    else
-    {
-        <span class="" style="display:inline-block;">
-            @tokenInfo.OriginalText
-        </span>
-    }
-
-    if (@tokenInfo.OriginalText.Contains('\n'))
-    {
-        <br />
-    }
-}
-
-<div style="font-size: 80%">
-    <br />
-    <span style="font-weight: bold; margin-left: 8px">راهنما: </span><span> </span>
-    <span class="has-refine">اصلاح نویسه‌های غیراستاندارد یا فاصله‌گذاری</span><span> ، </span>
-    <span class="has-suggestions-real">پیشنهاد جایگزین کردن واژه یا پیوسته‌نویسی</span><span> ، </span>
-    <span class="has-suggestions">اصلاح اشتباهات املائی یا تایپی</span>
 </div>
-<partial name="_ErrorReportButton" />
+    <div style="font-size: 80%">
+        <br />
+        <span style="font-weight: bold; margin-left: 8px">راهنما: </span><span> </span>
+        <span class="has-refine">اصلاح نویسه‌های غیراستاندارد یا فاصله‌گذاری</span><span> ، </span>
+        <span class="has-suggestions-real">پیشنهاد جایگزین کردن واژه یا پیوسته‌نویسی</span><span> ، </span>
+        <span class="has-suggestions">اصلاح اشتباهات املائی یا تایپی</span>
+    </div>
+    <partial name="_ErrorReportButton" />
 
-<script>
+    <script>
 
-    $(function () {
-        $('span[data-toggle="popover"]').popover();
-    })
-</script>
+        $(function () {
+            $('span[data-toggle="popover"]').popover();
+        })
+    </script>
