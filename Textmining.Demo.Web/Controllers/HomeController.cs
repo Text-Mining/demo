@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
@@ -298,6 +299,41 @@ namespace Textmining.Demo.Web.Controllers
             if (apiOutput.Item2)
             {
                 ViewData["Output"] = apiOutput.Item1;
+                return PartialView("_ApiOutput");
+            }
+            else
+            {
+                ShowError(apiOutput.Item1);
+                return new EmptyResult();
+            }
+        }
+
+        #endregion
+
+        #region Topic Modeling
+        public IActionResult TopicModeling()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult TopicModeling(TopicModelingModel model)
+        {
+            model.TopicsCount = Math.Min(10, Math.Max(2, model.TopicsCount));
+            model.WordsPerTopicCount = 10;
+            model.Documents = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+
+            var apiOutput = CallApi($"{_urlPath}InformationRetrieval/TopicModeling", model);
+
+            if (apiOutput.Item2)
+            {
+                var result = (List<Dictionary<string, double>>) JsonConvert.DeserializeObject(apiOutput.Item1,
+                    typeof(List<Dictionary<string, double>>));
+                if(result==null)
+                    ViewData["Output"] = apiOutput.Item1;
+                else 
+                    ViewData["Output"] = JsonConvert.SerializeObject(result.Select(l => l.Keys).ToArray());
                 return PartialView("_ApiOutput");
             }
             else

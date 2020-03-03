@@ -99,3 +99,25 @@ html[dir="rtl"] .sidebar {
 .form-group {
     padding-bottom: 20px;
 }
+
+label.bmd-label-floating {
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.header-label {
+    width: 60%;
+    margin: -8px 20px 0 20px;
+}
+
+@media (max-width: 991.98px) {
+    .header-label {
+        width: 100%;
+    }
+}
+
+@media (max-width: 830px) {
+    .header-label {
+        display: none;
+    }
+}
