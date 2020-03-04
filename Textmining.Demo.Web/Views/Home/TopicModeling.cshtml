@@ -67,7 +67,9 @@
             <select asp-for="Method" class="form-control">
                 <option value="LDA" title="Latent Dirichlet Allocation (LDA)" selected>LDA</option>
                 <option value="Clustering" title="k-Means Clustering DF-Vectors">Clustering</option>
-                <option value="FuzzyClustering " title="Fuzzy Clustering DF-Vectors">Fuzzy Clustering </option>
+                <option value="FuzzyClustering " title="Fuzzy Clustering DF-Vectors">Fuzzy Clustering</option>
+                <option value="PreDefineWordVectors " title="Use pre-define word vectors for clustering words">Pre-Define Word Vectors</option>
+                <option value="Word2VecClustering " title="Create word vectors and return words near the centers of clusters">Word2Vec Clustering</option>
             </select>
         </div>
 
