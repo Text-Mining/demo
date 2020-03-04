@@ -1,6 +1,7 @@
 ﻿
 <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y" style="background-color:#fff">
     <ul class="nav">
+        @*https://material.io/resources/icons/*@
         <li class="nav-item">
             <a class="nav-link" asp-action="SpellCorrector" asp-controller="Home">
                 <i class="material-icons">border_color</i>
@@ -23,7 +24,7 @@
             <a class="nav-link" asp-action="SentimentClassifier" asp-controller="Home">
                 <i class="material-icons">insert_emoticon</i>
                 <p @*class="menu-item-main"*@>
-                    تحلیل حس  (رضایتمندی)
+                    تحلیل حس (رضایتمندی)
                     @*<div class="menu-item-alert">(نسخه آزمایشی)</div>*@
                 </p>
             </a>
@@ -37,16 +38,15 @@
         <li class="nav-item">
             <a class="nav-link" asp-action="Summarization" asp-controller="Home">
                 <i class="material-icons">text_fields</i>
-                <p style="float: right">
-                    خلاصه‌سازی متن<div class="menu-item-alert">(جدید)</div>
-                </p>
+                <p>خلاصه‌سازی متن</p>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-action="TopicModeling" asp-controller="Home">
-                <i class="material-icons">text_fields</i>
+                <i class="material-icons">text_format</i>
                 <p style="float: right">
-                    شناسایی موضوعات<div class="menu-item-alert">(جدید)</div>
+                    شناسایی موضوعات
+                    <div class="menu-item-alert">(جدید)</div>
                 </p>
             </a>
         </li>
