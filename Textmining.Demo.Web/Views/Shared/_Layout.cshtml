@@ -346,7 +346,9 @@
     <script>
         $('#errorReportModal').on('show.bs.modal',
             function (e) {
-                $("#errorReportInputText").val($(".demo-form-input").val());
+                //console.log($("textarea#Text.form-control").val());
+                //$("#errorReportInputText").val($(".demo-form-input").val());
+                $("#errorReportInputText").val($("textarea#Text.form-control").val());
             })
     </script>
 
