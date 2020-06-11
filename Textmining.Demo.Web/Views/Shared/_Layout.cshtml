@@ -346,9 +346,18 @@
     <script>
         $('#errorReportModal').on('show.bs.modal',
             function (e) {
-                //console.log($("textarea#Text.form-control").val());
-                //$("#errorReportInputText").val($(".demo-form-input").val());
-                $("#errorReportInputText").val($("textarea#Text.form-control").val());
+                if (typeof $("textarea#InputText.form-control").val() != "undefined") {
+                    console.log($("textarea#InputText.form-control").val());
+                    $("#errorReportInputText").val($("textarea#InputText.form-control").val());
+                }
+                else if (typeof $("textarea#Text.form-control").val() != "undefined") {
+                    console.log($("textarea#Text.form-control").val());
+                    $("#errorReportInputText").val($("textarea#Text.form-control").val());
+                }
+                else if (typeof $(".demo-form-input").val() != "undefined") {
+                    console.log($(".demo-form-input").val());
+                    $("#errorReportInputText").val($(".demo-form-input").val());
+                }
             })
     </script>
 

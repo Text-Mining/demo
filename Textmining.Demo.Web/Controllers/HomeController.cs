@@ -518,6 +518,9 @@ namespace Textmining.Demo.Web.Controllers
                         _config.GetValue<string>("ErrorReport:SmtpPassword"))
                     //,Timeout = 30000
                 };
+/*#if DEBUG
+                return RedirectToAction("Index");
+#endif*/
 
                 MailMessage mail = new MailMessage
                 {
