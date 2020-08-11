@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Linq;
 
 namespace Textmining.Demo.Web.Models
 {
@@ -105,7 +106,7 @@ namespace Textmining.Demo.Web.Models
         /// نشان می‌دهد که آیا تغییراتی برای این توکن پیشنهاد شده است یا خیر؟
         /// </summary>
         /// <value><c>true</c> if this instance is changed; otherwise, <c>false</c>.</value>
-        public bool IsChanged => EditList.Count > 0 && !NewText.Equals(OriginalText);
+        public bool IsChanged => EditList.Count > 0 && EditList.Any(ed=>ed!=null && !ed.SuggestedText.Equals(OriginalText));
 
         /// <summary>
         /// تبدیل نمونه از کلاس به متن قابل چاپ
