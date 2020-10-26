@@ -27,8 +27,20 @@ else
         <tbody>
             @foreach (KeyValuePair<string, string> word in Model)
             {
-                var badgeColor = word.Value == "MildSwearWord" ? "warning" : "danger";
-                var badgeTitle = word.Value == "MildSwearWord" ? "عبارت دارای اهانت خفیف یا دووجهی" : "عبارت دارای اهانت شدید (کلمه رکیک)";
+                var badgeColor = "info";
+                var badgeTitle = "کلمات حساس (لیست سفارشی یا دلخواه)";
+                switch (word.Value.ToLower())
+                {
+                    case "mildswearword":
+                        badgeColor = "warning";
+                        badgeTitle = "عبارت دارای اهانت خفیف یا دووجهی";
+                        break;
+                    case "strongswearword ":
+                        badgeColor = "danger";
+                        badgeTitle = "عبارت دارای اهانت شدید (کلمه رکیک)";
+                        break;
+                }
+
                 <tr>
                     <td>
                         @word.Key
