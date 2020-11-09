@@ -26,7 +26,7 @@ namespace Textmining.Demo.Web.Controllers
         private readonly string _urlPath;
         private readonly IConfiguration _config;
         private readonly IToastNotification _toastNotification;
-        private static int _feedback;
+        private static string _feedback;
         private static string _token;
         private readonly string _currentPath;
 
@@ -515,8 +515,9 @@ namespace Textmining.Demo.Web.Controllers
                 SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
                 {
                     Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"),
-                        _config.GetValue<string>("ErrorReport:SmtpPassword"))
-                    //,Timeout = 30000
+                        _config.GetValue<string>("ErrorReport:SmtpPassword")),
+                    //Timeout = 300000
+                    //Port = 587
                 };
 /*#if DEBUG
                 return RedirectToAction("Index");
@@ -543,11 +544,13 @@ namespace Textmining.Demo.Web.Controllers
                     mail.Dispose();
                 };
                 smtp.SendAsync(mail, null);
-                _feedback = 1;
+                _feedback = "OK";
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
-                _feedback = 2;
+                _feedback = ex.Message;
+                if (ex.InnerException != null)
+                    _feedback += Environment.NewLine + ex.InnerException.Message;
             }
 
             return RedirectToAction("Index");
@@ -555,20 +558,23 @@ namespace Textmining.Demo.Web.Controllers
 
         private void CheckFeedbackNotif()
         {
-            if(_feedback == 1)
-                _toastNotification.AddSuccessToastMessage("با تشکر از همکاری شما",
-                    new ToastrOptions()
-                    {
-                        Title = "ارسال موفق گزارش"
-                    });
-            else if(_feedback == 2)
-                _toastNotification.AddErrorToastMessage("خطایی در ارسال گزارش به وجود آمد",
-                    new ToastrOptions()
-                    {
-                        Title = "خطا"
-                    });
+            if (!string.IsNullOrWhiteSpace(_feedback))
+            {
+                if (_feedback == "OK")
+                    _toastNotification.AddSuccessToastMessage("با تشکر از همکاری شما",
+                        new ToastrOptions()
+                        {
+                            Title = "ارسال موفق گزارش"
+                        });
+                else if (_feedback.Length > 0)
+                    _toastNotification.AddErrorToastMessage("خطایی در ارسال گزارش به وجود آمد: " + _feedback,
+                        new ToastrOptions()
+                        {
+                            Title = "خطا"
+                        });
+            }
 
-            _feedback = 0;
+            _feedback = string.Empty;
         }
 
         #endregion
