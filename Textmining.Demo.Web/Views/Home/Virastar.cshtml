@@ -22,11 +22,16 @@
         </div>
 
         <label>تعداد پیشنهادات غلط‌یاب (بین ۱ تا ۵) :</label>
-
         <div class="form-group bmd-form-group is-filled">
             @*<label class="bmd-label-floating">تعداد پیشنهادات غلط‌یاب در خروجی (بین ۱ تا ۵)</label>*@
             <input asp-for="SpellCheckerCandidateCount" type="tel" min="1" max="10" step="1" value="3" class="form-control" />
         </div>
+        
+        <div class="form-group bmd-form-group is-filled">
+            <label>غلط‌یابی معنایی با توجه به بافت جمله :</label>
+            <input asp-for="CheckRealWordSpell" type="checkbox" checked="checked" class="form-control" style="height: auto; width: auto; display: inline-block; margin-right: 10px;" />
+        </div>
+
     </div>
     <input type="submit" class="btn btn-success btn-xl js-scroll-trigger mt-3" value="ارسال">
 </form>

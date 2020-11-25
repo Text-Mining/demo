@@ -20,15 +20,15 @@
                 <p>تشخیص کلمات زشت و رکیک</p>
             </a>
         </li>
-        <li class="nav-item">
+        @*<li class="nav-item">
             <a class="nav-link" asp-action="SentimentClassifier" asp-controller="Home">
                 <i class="material-icons">insert_emoticon</i>
-                <p @*class="menu-item-main"*@>
+                <p $1$class="menu-item-main"#1#>
                     تحلیل حس (رضایتمندی)
-                    @*<div class="menu-item-alert">(نسخه آزمایشی)</div>*@
+                    $1$<div class="menu-item-alert">(نسخه آزمایشی)</div>#1#
                 </p>
             </a>
-        </li>
+        </li>*@
         <li class="nav-item">
             <a class="nav-link" asp-action="KeywordExtraction" asp-controller="Home">
                 <i class="material-icons">find_in_page</i>
@@ -44,9 +44,9 @@
         <li class="nav-item">
             <a class="nav-link" asp-action="TopicModeling" asp-controller="Home">
                 <i class="material-icons">text_format</i>
-                <p style="float: right">
+                <p @*style="float: right"*@>
                     شناسایی موضوعات
-                    <div class="menu-item-alert">(جدید)</div>
+                    @*<div class="menu-item-alert">(جدید)</div>*@
                 </p>
             </a>
         </li>

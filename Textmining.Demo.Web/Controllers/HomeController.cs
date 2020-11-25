@@ -359,7 +359,12 @@ namespace Textmining.Demo.Web.Controllers
         {
             model.SpellCheckerCandidateCount = Math.Min(5, Math.Max(1, model.SpellCheckerCandidateCount));
 
-            var result = CallApi($"{_urlPath}Virastar/ScanText", model);
+            var result = CallApi($"{_urlPath}Virastar/ScanText", new
+            {
+                model.Text, 
+                model.SpellCheckerCandidateCount,
+                RealWordAlternativeCount = model.CheckRealWordSpell ? 2 : 0
+            });
 
             if (result.Item2)
             {

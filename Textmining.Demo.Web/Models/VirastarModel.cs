@@ -8,6 +8,9 @@ namespace Textmining.Demo.Web.Models
         public string Text { get; set; }
 
         public int SpellCheckerCandidateCount { get; set; } = 3;
+
+        public bool CheckRealWordSpell { get; set; } = true;
+
         public string OutputText { get; set; }
     }
 }
