@@ -96,6 +96,11 @@ html[dir="rtl"] .sidebar {
     margin-top: 15px;
 }
 
+.wrapper {
+    direction: rtl;
+    overflow: auto;
+}
+
 .form-group {
     padding-bottom: 20px;
 }
@@ -120,4 +125,7 @@ label.bmd-label-floating {
     .header-label {
         display: none;
     }
+	.sidebar .nav li a{
+		margin: 1px 15px 0;
+	}
 }
