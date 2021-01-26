@@ -320,23 +320,23 @@
                         $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
 
                         setTimeout(function () {
-                            $('body').addClass('sidebar-mini');
+                                $('body').addClass('sidebar-mini');
 
-                            md.misc.sidebar_mini_active = true;
-                        },
+                                md.misc.sidebar_mini_active = true;
+                            },
                             300);
                     }
 
                     // we simulate the window Resize so the charts will get updated in realtime.
                     var simulateWindowResize = setInterval(function () {
-                        window.dispatchEvent(new Event('resize'));
-                    },
+                            window.dispatchEvent(new Event('resize'));
+                        },
                         180);
 
                     // we stop the simulation of Window Resize after the animations are completed
                     setTimeout(function () {
-                        clearInterval(simulateWindowResize);
-                    },
+                            clearInterval(simulateWindowResize);
+                        },
                         1000);
 
                 });
@@ -376,12 +376,12 @@
     <script>
         $(function () {
             var current = location.pathname;
-            $('.nav li a').each(function () {
+            $('.nav li a').each(function() {
                 var $this = $(this);
                 if ($this.attr('href').indexOf(current) !== -1) {
                     $this.parent().addClass('active');
                 }
-            })
+            });
         })
     </script>
 </body>

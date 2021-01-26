@@ -3,6 +3,12 @@
     <ul class="nav">
         @*https://material.io/resources/icons/*@
         <li class="nav-item">
+            <a class="nav-link" asp-action="Virastar" asp-controller="Home">
+                <i class="material-icons">spellcheck</i>
+                <p>ویراستاری متن</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" asp-action="SpellCorrector" asp-controller="Home">
                 <i class="material-icons">border_color</i>
                 <p>اصلاح اشتباهات تایپی</p>
@@ -69,21 +75,15 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" asp-action="LemmatizeText2Text" asp-controller="Home">
-                <i class="material-icons">line_style</i>
-                <p>ریشه‌یابی متن</p>
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" asp-action="GetMostSimilarWord" asp-controller="Home">
                 <i class="material-icons">format_shapes</i>
                 <p>دریافت کلمات مرتبط</p>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" asp-action="Virastar" asp-controller="Home">
-                <i class="material-icons">spellcheck</i>
-                <p>ویراستاری متن</p>
+            <a class="nav-link" asp-action="LemmatizeText2Text" asp-controller="Home">
+                <i class="material-icons">line_style</i>
+                <p>ریشه‌یابی کلمات</p>
             </a>
         </li>
         <li class="nav-item">
