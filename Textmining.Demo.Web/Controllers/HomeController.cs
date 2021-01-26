@@ -363,7 +363,9 @@ namespace Textmining.Demo.Web.Controllers
             {
                 model.Text, 
                 model.SpellCheckerCandidateCount,
-                RealWordAlternativeCount = model.CheckRealWordSpell ? 2 : 0
+                RealWordAlternativeCount = model.CheckRealWordSpell ? 2 : 0,
+                LexicalSpellCheckHighSensitive = model.SpellCheckHighSensitive,
+                ContextSpellCheckHighSensitive = model.SpellCheckHighSensitive
             });
 
             if (result.Item2)

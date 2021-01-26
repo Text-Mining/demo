@@ -11,6 +11,8 @@ namespace Textmining.Demo.Web.Models
 
         public bool CheckRealWordSpell { get; set; } = true;
 
+        public bool SpellCheckHighSensitive { get; set; } = true;
+
         public string OutputText { get; set; }
     }
 }
