@@ -493,7 +493,8 @@ namespace Textmining.Demo.Web.Controllers
                     errorMessage = viewModel["message"].Value<string>();
                 else errorMessage = viewModel.First.First[0].Value<string>();
 
-                _toastNotification.AddErrorToastMessage(errorMessage,
+                _toastNotification.AddErrorToastMessage(
+                    string.IsNullOrWhiteSpace(errorMessage)?msg:errorMessage,
                     new ToastrOptions()
                     {
                         Title = "خطا"
