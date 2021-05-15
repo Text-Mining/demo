@@ -361,11 +361,15 @@ namespace Textmining.Demo.Web.Controllers
 
             var result = CallApi($"{_urlPath}Virastar/ScanText", new
             {
-                model.Text, 
-                model.SpellCheckerCandidateCount,
-                RealWordAlternativeCount = model.CheckRealWordSpell ? 2 : 0,
-                LexicalSpellCheckHighSensitive = model.SpellCheckHighSensitive,
-                ContextSpellCheckHighSensitive = model.SpellCheckHighSensitive
+                model.Text,
+                ReturnOnlyChangedTokens = false,
+                SpellConfiguration = new
+                {
+                    LexicalSpellCheckSuggestionCount = model.SpellCheckerCandidateCount,
+                    RealWordAlternativeSuggestionCount = model.CheckRealWordSpell ? 2 : 0,
+                    LexicalSpellCheckHighSensitive = model.SpellCheckHighSensitive,
+                    ContextSpellCheckHighSensitive = model.SpellCheckHighSensitive
+                }
             });
 
             if (result.Item2)
