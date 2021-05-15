@@ -6,7 +6,7 @@
 **توجه** این پروژه تحت وب دمو برای ابزارهای متن‌کاوی فارسی‌یار است و در ویندوز، مک و لینوکس قابل استفاده است. نسخه آنلاین آن را می‌توانید در آدرس [https://demo.text-mining.ir](demo.text-mining.ir) مشاهده کنید.
 
 ### پیش‌نیازها
-برای استفاده از این پروژه به `.NET Core 2.2` نیاز دارید که از آدرس [https://dotnet.microsoft.com/download/dotnet-core/2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2) برای سیستم‌عامل‌های مختلف قابل دانلود است.
+برای استفاده از این پروژه به `.NET Core 3.1` نیاز دارید که از آدرس [https://dotnet.microsoft.com/download/dotnet/3.1](https://dotnet.microsoft.com/download/dotnet/3.1) برای سیستم‌عامل‌های مختلف قابل دانلود است.
 
 
 ### شروع به کار
