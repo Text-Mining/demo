@@ -518,52 +518,58 @@ namespace Textmining.Demo.Web.Controllers
 
         #region Report Error 
 
+        HashSet<char> _persianChars = new HashSet<char>(
+            "ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیآيءئأإؤ".ToCharArray());
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult ReportError(string errorReportInputText, string errorReportComment)
         {
-            try
-            {
-                SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
+            if (errorReportInputText.Count(c => _persianChars.Contains(c)) < 3 &&
+                errorReportComment.Count(c => _persianChars.Contains(c)) < 3)
+                _feedback = "متن ورودی و توضیحات باید بصورت متن فارسی وارد شود.";
+            else
+                try
                 {
-                    Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"),
-                        _config.GetValue<string>("ErrorReport:SmtpPassword")),
-                    //Timeout = 300000
-                    //Port = 587
-                };
+                    SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
+                    {
+                        Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"),
+                            _config.GetValue<string>("ErrorReport:SmtpPassword")),
+                        //Timeout = 300000
+                        //Port = 587
+                    };
 /*#if DEBUG
-                return RedirectToAction("Index");
+                     return RedirectToAction("Index");
 #endif*/
 
-                MailMessage mail = new MailMessage
-                {
-                    From = new MailAddress(_config.GetValue<string>("ErrorReport:SmtpUsername")),
-                    IsBodyHtml = true,
-                    Subject = "گزارش خطا در دمو ابزارهای فارسی‌یار"
-                };
-                mail.To.Add(_config.GetValue<string>("ErrorReport:ReportEmail"));
-                mail.Body = $"<p dir='rtl'>" +
-                            $"ورودی: {errorReportInputText} " +
-                            $"<br/> " +
-                            $"توضیحات:{errorReportComment}" +
-                            $"<br/> " +
-                            $"آدرس ابزار:{Request.Headers["Referer"].ToString()}" +
-                            $"</p>";
+                    MailMessage mail = new MailMessage
+                    {
+                        From = new MailAddress(_config.GetValue<string>("ErrorReport:SmtpUsername")),
+                        IsBodyHtml = true,
+                        Subject = "گزارش خطا در دمو ابزارهای فارسی‌یار"
+                    };
+                    mail.To.Add(_config.GetValue<string>("ErrorReport:ReportEmail"));
+                    mail.Body = "<p dir='rtl'>" +
+                                $"ورودی: {errorReportInputText} " +
+                                "<br/> " +
+                                $"توضیحات: {errorReportComment}" +
+                                "<br/> " +
+                                $"آدرس ابزار: {Request.Headers["Referer"]}" +
+                                "</p>";
 
-                //smtp.Send(mail);
-                smtp.SendCompleted += (s, e) => {
-                    smtp.Dispose();
-                    mail.Dispose();
-                };
-                smtp.SendAsync(mail, null);
-                _feedback = "OK";
-            }
-            catch (Exception ex)
-            {
-                _feedback = ex.Message;
-                if (ex.InnerException != null)
-                    _feedback += Environment.NewLine + ex.InnerException.Message;
-            }
+                    //smtp.Send(mail);
+                    smtp.SendCompleted += (s, e) => {
+                        smtp.Dispose();
+                        mail.Dispose();
+                    };
+                    smtp.SendAsync(mail, null);
+                    _feedback = "OK";
+                }
+                catch (Exception ex)
+                {
+                    _feedback = ex.Message;
+                    if (ex.InnerException != null)
+                        _feedback += Environment.NewLine + ex.InnerException.Message;
+                }
 
             return RedirectToAction("Index");
         }
