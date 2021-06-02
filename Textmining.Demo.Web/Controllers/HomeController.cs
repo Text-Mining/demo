@@ -30,7 +30,7 @@ namespace Textmining.Demo.Web.Controllers
         private static string _token;
         private readonly string _currentPath;
 
-        public HomeController(IConfiguration config, IHostingEnvironment env, IToastNotification toastNotification)
+        public HomeController(IConfiguration config, IWebHostEnvironment env, IToastNotification toastNotification)
         {
             _config = config;
             _currentPath = env.WebRootPath;
@@ -57,18 +57,21 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult FormalConverter(ApiViewModel model)
         {
-            var apiOutput = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
+            if (!string.IsNullOrWhiteSpace(model.InputText))
+            {
+                var apiOutput = CallApi($"{_urlPath}TextRefinement/FormalConverter", model.InputText);
 
-            if (apiOutput.Item2)
-            {
-                ViewData["Output"] = apiOutput.Item1;
-                return PartialView("_ApiOutput");
+                if (apiOutput.Item2)
+                {
+                    ViewData["Output"] = apiOutput.Item1;
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         #endregion
@@ -83,18 +86,21 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SpellCorrector(SpellCheckerModel model)
         {
-            var apiOutput = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
+            if (!string.IsNullOrWhiteSpace(model.Text))
+            {
+                var apiOutput = CallApi($"{_urlPath}TextRefinement/SpellCorrector", model);
 
-            if (apiOutput.Item2)
-            {
-                ViewData["Output"] = apiOutput.Item1;
-                return PartialView("_ApiOutput");
+                if (apiOutput.Item2)
+                {
+                    ViewData["Output"] = apiOutput.Item1;
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         #endregion
@@ -110,18 +116,21 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SwearWordTagger(ApiViewModel model)
         {
-            var apiOutput = CallApi($"{_urlPath}TextRefinement/SwearWordTagger", model.InputText);
+            if (!string.IsNullOrWhiteSpace(model.InputText))
+            {
+                var apiOutput = CallApi($"{_urlPath}TextRefinement/SwearWordTagger", model.InputText);
 
-            if (apiOutput.Item2)
-            {
-                var viewModel = JsonConvert.DeserializeObject<Dictionary<string, string>>(apiOutput.Item1);
-                return PartialView("_SwearTaggerOutput", viewModel);
+                if (apiOutput.Item2)
+                {
+                    var viewModel = JsonConvert.DeserializeObject<Dictionary<string, string>>(apiOutput.Item1);
+                    return PartialView("_SwearTaggerOutput", viewModel);
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         #endregion
@@ -136,17 +145,20 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SentimentClassifier(ApiViewModel model)
         {
-            var apiOutput = CallApi($"{_urlPath}SentimentAnalyzer/SentimentClassifier", model.InputText);
-            if (apiOutput.Item2)
+            if (!string.IsNullOrWhiteSpace(model.InputText))
             {
-                var viewModel = JsonConvert.DeserializeObject<int>(apiOutput.Item1);
-                return PartialView("_SentimentClassifierOutput", viewModel);
+                var apiOutput = CallApi($"{_urlPath}SentimentAnalyzer/SentimentClassifier2", model.InputText);
+                if (apiOutput.Item2)
+                {
+                    var viewModel = JsonConvert.DeserializeObject<int>(apiOutput.Item1);
+                    return PartialView("_SentimentClassifierOutput", viewModel);
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
         #endregion
 
@@ -160,18 +172,21 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult NamedEntityRecognitionDetect(ApiViewModel model)
         {
-            var apiOutput = CallApi($"{_urlPath}NamedEntityRecognition/Detect", model.InputText);
+            if (!string.IsNullOrWhiteSpace(model.InputText))
+            {
+                var apiOutput = CallApi($"{_urlPath}NamedEntityRecognition/Detect", model.InputText);
 
-            if (apiOutput.Item2)
-            {
-                var viewModel = JsonConvert.DeserializeObject<List<Phrase>>(apiOutput.Item1);
-                return PartialView("_NamedEntityRecognitionDetectOutput", viewModel);
+                if (apiOutput.Item2)
+                {
+                    var viewModel = JsonConvert.DeserializeObject<List<Phrase>>(apiOutput.Item1);
+                    return PartialView("_NamedEntityRecognitionDetectOutput", viewModel);
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
         #endregion
 
@@ -185,17 +200,20 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LanguageDetectionPredict(ApiViewModel model)
         {
-            var result = CallApi($"{_urlPath}LanguageDetection/Predict", model.InputText);
-            if (result.Item2)
+            if (!string.IsNullOrWhiteSpace(model.InputText))
             {
-                ViewData["Output"] = result.Item1;
-                return PartialView("_ApiOutput");
+                var result = CallApi($"{_urlPath}LanguageDetection/Predict", model.InputText);
+                if (result.Item2)
+                {
+                    ViewData["Output"] = result.Item1;
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(result.Item1);
+                }
             }
-            else
-            {
-                ShowError(result.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
         #endregion
 
@@ -209,17 +227,20 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LemmatizeText2Text(ApiViewModel model)
         {
-            var result = CallApi($"{_urlPath}Stemmer/LemmatizeText2Text", model.InputText);
-            if (result.Item2)
+            if (!string.IsNullOrWhiteSpace(model.InputText))
             {
-                ViewData["Output"] = result.Item1;
-                return PartialView("_ApiOutput");
+                var result = CallApi($"{_urlPath}Stemmer/LemmatizeText2Text", model.InputText);
+                if (result.Item2)
+                {
+                    ViewData["Output"] = result.Item1;
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(result.Item1);
+                }
             }
-            else
-            {
-                ShowError(result.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
         #endregion
 
@@ -233,19 +254,22 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GetMostSimilarWord(GetMostSimilarWordModel model)
         {
-            //ViewData["Output"] = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
-            //return PartialView("_ApiOutput");
-            var result = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
-            if (result.Item2)
+            if (!string.IsNullOrWhiteSpace(model.Word))
             {
-                var viewModel = JsonConvert.DeserializeObject<string[]>(result.Item1);
-                return PartialView("_GetMostSimilarWordOutput", viewModel);
+                //ViewData["Output"] = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
+                //return PartialView("_ApiOutput");
+                var result = CallApi($"{_urlPath}TextSimilarity/GetMostSimilarWord", model);
+                if (result.Item2)
+                {
+                    var viewModel = JsonConvert.DeserializeObject<string[]>(result.Item1);
+                    return PartialView("_GetMostSimilarWordOutput", viewModel);
+                }
+                else
+                {
+                    ShowError(result.Item1);
+                }
             }
-            else
-            {
-                ShowError(result.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         #endregion
@@ -260,24 +284,27 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult KeywordExtraction(KeywordExtractionModel model)
         {
-            model.MinWordLength = 3;
-            //model.MaxWordCount = 3;
-            model.MinKeywordFrequency = 1;
-            //model.Method = "TFIDF";
-            model.MaxWordCount = Math.Min(5, Math.Max(1, model.MaxWordCount));
-
-            var apiOutput = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
-
-            if (apiOutput.Item2)
+            if (!string.IsNullOrWhiteSpace(model.Text))
             {
-                var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput.Item1);
-                return PartialView("_KeywordExtractionOutput", viewModel);
+                model.MinWordLength = 3;
+                //model.MaxWordCount = 3;
+                model.MinKeywordFrequency = 1;
+                //model.Method = "TFIDF";
+                model.MaxWordCount = Math.Min(5, Math.Max(1, model.MaxWordCount));
+
+                var apiOutput = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model);
+
+                if (apiOutput.Item2)
+                {
+                    var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput.Item1);
+                    return PartialView("_KeywordExtractionOutput", viewModel);
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         #endregion
@@ -320,27 +347,30 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult TopicModeling(TopicModelingModel model)
         {
-            model.TopicsCount = Math.Min(10, Math.Max(2, model.TopicsCount));
-            model.WordsPerTopicCount = 10;
-            model.Documents = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
-
-            var apiOutput = CallApi($"{_urlPath}InformationRetrieval/TopicModeling", model);
-
-            if (apiOutput.Item2)
+            if (!string.IsNullOrWhiteSpace(model.Text))
             {
-                var result = (List<Dictionary<string, double>>) JsonConvert.DeserializeObject(apiOutput.Item1,
-                    typeof(List<Dictionary<string, double>>));
-                if(result==null)
-                    ViewData["Output"] = apiOutput.Item1;
-                else 
-                    ViewData["Output"] = JsonConvert.SerializeObject(result.Select(l => l.Keys).ToArray());
-                return PartialView("_ApiOutput");
+                model.TopicsCount = Math.Min(10, Math.Max(2, model.TopicsCount));
+                model.WordsPerTopicCount = 10;
+                model.Documents = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+
+                var apiOutput = CallApi($"{_urlPath}InformationRetrieval/TopicModeling", model);
+
+                if (apiOutput.Item2)
+                {
+                    var result = (List<Dictionary<string, double>>) JsonConvert.DeserializeObject(apiOutput.Item1,
+                        typeof(List<Dictionary<string, double>>));
+                    if (result == null)
+                        ViewData["Output"] = apiOutput.Item1;
+                    else
+                        ViewData["Output"] = JsonConvert.SerializeObject(result.Select(l => l.Keys).ToArray());
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(apiOutput.Item1);
+                }
             }
-            else
-            {
-                ShowError(apiOutput.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         #endregion
@@ -357,34 +387,37 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Virastar(VirastarModel model)
         {
-            model.SpellCheckerCandidateCount = Math.Min(5, Math.Max(1, model.SpellCheckerCandidateCount));
-
-            var result = CallApi($"{_urlPath}Virastar/ScanText", new
+            if (!string.IsNullOrWhiteSpace(model.Text))
             {
-                model.Text,
-                ReturnOnlyChangedTokens = false,
-                SpellConfiguration = new
+                model.SpellCheckerCandidateCount = Math.Min(5, Math.Max(1, model.SpellCheckerCandidateCount));
+
+                var result = CallApi($"{_urlPath}Virastar/ScanText", new
                 {
-                    LexicalSpellCheckSuggestionCount = model.SpellCheckerCandidateCount,
-                    RealWordAlternativeSuggestionCount = model.CheckRealWordSpell ? 2 : 0,
-                    LexicalSpellCheckHighSensitive = model.SpellCheckHighSensitive,
-                    ContextSpellCheckHighSensitive = model.SpellCheckHighSensitive
+                    model.Text,
+                    ReturnOnlyChangedTokens = false,
+                    SpellConfiguration = new
+                    {
+                        LexicalSpellCheckSuggestionCount = model.SpellCheckerCandidateCount,
+                        RealWordAlternativeSuggestionCount = model.CheckRealWordSpell ? 2 : 0,
+                        LexicalSpellCheckHighSensitive = model.SpellCheckHighSensitive,
+                        ContextSpellCheckHighSensitive = model.SpellCheckHighSensitive
+                    }
+                });
+
+                if (result.Item2)
+                {
+                    var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result.Item1);
+                    foreach (TokenInfo tokenInfo in viewModel)
+                        tokenInfo.EditList.Reverse();
+
+                    return PartialView("_VirastarOutput", viewModel);
                 }
-            });
-
-            if (result.Item2)
-            {
-                var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result.Item1);
-                foreach (TokenInfo tokenInfo in viewModel)
-                    tokenInfo.EditList.Reverse();
-
-                return PartialView("_VirastarOutput", viewModel);
+                else
+                {
+                    ShowError(result.Item1);
+                }
             }
-            else
-            {
-                ShowError(result.Item1);
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
         #endregion
 
@@ -400,35 +433,67 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult WordCloud(WordCloudModel model)
         {
-            try
+            if (!string.IsNullOrWhiteSpace(model.Text))
             {
-                string jsonStr = JsonConvert.SerializeObject(new
-                    {
-                        Words = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries),
-                        Theme = model.Theme,
-                        //FontName = "Samim"
-                    }
-                );
-
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GetJWTToken());
-                var response = client.PostAsync($"{_urlPath}InformationRetrieval/WordCloudGeneration",
-                    new StringContent(jsonStr, Encoding.UTF8, "application/json")).Result;
-                var bytesArray = response.Content.ReadAsByteArrayAsync().Result;
-                using (var ms = new MemoryStream(bytesArray))
+                try
                 {
-                    Image image = Image.FromStream(ms);
-                    string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".jpg";
-                    image.Save(Path.Combine(_currentPath, "wordcloud", fileName));
-                    return PartialView("_WordCloudOutput", "~/wordcloud/" + fileName);
+                    string[] words = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+                    // اگر به جای لیست کلمات متن وارد کرده بود
+                    if (words.Length < 20 && words.Average(w => w.Length) > 20)
+                    {
+                        var model2 = new KeywordExtractionModel
+                        {
+                            MinWordLength = 3,
+                            MaxWordCount = 3,
+                            MinKeywordFrequency = 1,
+                            ResultKeywordCount = 500,
+                            Method = "FNG",
+                            Text = model.Text
+                        };
+
+                        try
+                        {
+                            var apiOutput = CallApi($"{_urlPath}InformationRetrieval/KeywordExtraction", model2);
+                            if (apiOutput.Item2)
+                            {
+                                var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput.Item1);
+                                words = viewModel.Keys.ToArray();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error(ex);
+                            ShowError("خطا در استخراج کلمات کلیدی");
+                            return new EmptyResult();
+                        }
+                    }
+
+                    string jsonStr = JsonConvert.SerializeObject(new
+                        {
+                            Words = words, model.Theme, //FontName = "Samim"
+                        }
+                    );
+
+                    HttpClient client = new HttpClient();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GetJWTToken());
+                    var response = client.PostAsync($"{_urlPath}InformationRetrieval/WordCloudGeneration",
+                        new StringContent(jsonStr, Encoding.UTF8, "application/json")).Result;
+                    var bytesArray = response.Content.ReadAsByteArrayAsync().Result;
+                    using (var ms = new MemoryStream(bytesArray))
+                    {
+                        Image image = Image.FromStream(ms);
+                        string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".jpg";
+                        image.Save(Path.Combine(_currentPath, "wordcloud", fileName));
+                        return PartialView("_WordCloudOutput", "~/wordcloud/" + fileName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex);
+                    ShowError("خطا در ترسیم ابر کلمات");
                 }
             }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                ShowError("خطا در ترسیم ابر کلمات");
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
         #endregion
 
@@ -490,16 +555,17 @@ namespace Textmining.Demo.Web.Controllers
             {
                 var viewModel = JObject.Parse(msg);
                 
-                string errorMessage;
-                if(viewModel.ContainsKey("error"))
+                string errorMessage = "نامشخص";
+                if(viewModel.ContainsKey("error") && viewModel["error"] != null)
                     errorMessage = viewModel["error"].Value<string>();
-                else if (viewModel.ContainsKey("message"))
+                else if (viewModel.ContainsKey("message") && viewModel["message"] != null)
                     errorMessage = viewModel["message"].Value<string>();
-                else errorMessage = viewModel.First.First[0].Value<string>();
+                else if(viewModel.First?.First != null && !string.IsNullOrWhiteSpace(viewModel.First.First[0]?.Value<string>()))
+                    errorMessage = viewModel.First.First[0].Value<string>();
 
                 _toastNotification.AddErrorToastMessage(
-                    string.IsNullOrWhiteSpace(errorMessage)?msg:errorMessage,
-                    new ToastrOptions()
+                    string.IsNullOrWhiteSpace(errorMessage) ? msg : errorMessage,
+                    new ToastrOptions
                     {
                         Title = "خطا"
                     });
@@ -524,10 +590,13 @@ namespace Textmining.Demo.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult ReportError(string errorReportInputText, string errorReportComment)
         {
-            if (errorReportInputText.Count(c => _persianChars.Contains(c)) < 3 &&
-                errorReportComment.Count(c => _persianChars.Contains(c)) < 3)
+            if ((string.IsNullOrWhiteSpace(errorReportInputText) || errorReportInputText.Count(c => _persianChars.Contains(c)) < 3) &&
+                (string.IsNullOrWhiteSpace(errorReportComment) || errorReportComment.Count(c => _persianChars.Contains(c)) < 3))
+            {
                 _feedback = "متن ورودی و توضیحات باید بصورت متن فارسی وارد شود.";
+            }
             else
+            {
                 try
                 {
                     SmtpClient smtp = new SmtpClient(_config.GetValue<string>("ErrorReport:SmtpHost"))
@@ -537,9 +606,9 @@ namespace Textmining.Demo.Web.Controllers
                         //Timeout = 300000
                         //Port = 587
                     };
-/*#if DEBUG
-                     return RedirectToAction("Index");
-#endif*/
+                    /*#if DEBUG
+                                         return RedirectToAction("Index");
+                    #endif*/
 
                     MailMessage mail = new MailMessage
                     {
@@ -570,6 +639,7 @@ namespace Textmining.Demo.Web.Controllers
                     if (ex.InnerException != null)
                         _feedback += Environment.NewLine + ex.InnerException.Message;
                 }
+            }
 
             return RedirectToAction("Index");
         }

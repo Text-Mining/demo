@@ -4,16 +4,16 @@
 
 }
 
-@if (Model == 0)
+@if (Model < 0)
 {
     <span class="badge badge-danger">حس منفی</span>
 }
-@if (Model == 1)
+@if (Model == 0)
 {
     <span class="badge badge-light">حس خنثی</span>
 }
 
-@if (Model == 2)
+@if (Model > 0)
 {
     <span class="badge badge-success">حس مثبت</span>
 }
