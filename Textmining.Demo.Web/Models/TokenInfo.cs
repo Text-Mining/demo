@@ -6,7 +6,7 @@ using System.Linq;
 namespace Textmining.Demo.Web.Models
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum EditType { SpaceCorrection, CharReplace, SpellCorrection, WordSuggestion } //MergeWithPrev, MergeWithNext,
+    public enum EditType {None, SpaceCorrection, CharReplace, SpellCorrection, WordSuggestion } //MergeWithPrev, MergeWithNext,
     
     [JsonConverter(typeof(StringEnumConverter))]
     public enum TokenType { FormalWord, Word, Separator, Number, Phone, Email, Web, SocialId, HashTag, Emoji, Abbreviation, DateTime, English }
