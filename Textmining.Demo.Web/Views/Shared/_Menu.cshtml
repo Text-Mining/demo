@@ -29,7 +29,17 @@
         <li class="nav-item">
             <a class="nav-link" asp-action="SentimentClassifier" asp-controller="Home">
                 <i class="material-icons">insert_emoticon</i>
-                <p style="float: right"@*class="menu-item-main"*@>تحلیل حسی
+                <p style="float: right" @*class="menu-item-main"*@>
+                    تحلیل حسی
+                    <div class="menu-item-alert">(نسخه آزمایشی)</div>
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-action="PunctuationRestoration" asp-controller="Home">
+                <i class="material-icons">question_mark</i>
+                <p style="float: right" @*class="menu-item-main"*@>
+                    علائم‌گذاری
                     <div class="menu-item-alert">(نسخه آزمایشی)</div>
                 </p>
             </a>

@@ -421,6 +421,38 @@ namespace Textmining.Demo.Web.Controllers
         }
         #endregion
 
+        #region PunctuationRestoration
+        public IActionResult PunctuationRestoration()
+        {
+            //CheckFeedbackNotif();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PunctuationRestoration(ApiViewModel model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.InputText))
+            {
+                var result = CallApi($"{_urlPath}Virastar/PunctuationRestoration", new
+                {
+                    Text = model.InputText
+                });
+
+                if (result.Item2)
+                {
+                    ViewData["Output"] = result.Item1;
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(result.Item1);
+                }
+            }
+            return new EmptyResult();
+        }
+        #endregion
+
         #region WordCloud
         public IActionResult WordCloud()
         {
