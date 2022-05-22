@@ -398,7 +398,7 @@ namespace Textmining.Demo.Web.Controllers
                     SpellConfiguration = new
                     {
                         LexicalSpellCheckSuggestionCount = model.SpellCheckerCandidateCount,
-                        RealWordAlternativeSuggestionCount = model.CheckRealWordSpell ? 2 : 0,
+                        RealWordAlternativeSuggestionCount = 0,
                         LexicalSpellCheckHighSensitive = model.SpellCheckHighSensitive,
                         ContextSpellCheckHighSensitive = model.SpellCheckHighSensitive
                     }
