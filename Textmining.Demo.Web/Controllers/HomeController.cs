@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -407,8 +406,9 @@ namespace Textmining.Demo.Web.Controllers
                 if (result.Item2)
                 {
                     var viewModel = JsonConvert.DeserializeObject<List<TokenInfo>>(result.Item1);
-                    foreach (TokenInfo tokenInfo in viewModel)
-                        tokenInfo.EditList.Reverse();
+                    if (viewModel != null)
+                        foreach (TokenInfo tokenInfo in viewModel)
+                            tokenInfo.EditList.Reverse();
 
                     return PartialView("_VirastarOutput", viewModel);
                 }
@@ -489,7 +489,7 @@ namespace Textmining.Demo.Web.Controllers
                             if (apiOutput.Item2)
                             {
                                 var viewModel = JsonConvert.DeserializeObject<Dictionary<string, double>>(apiOutput.Item1);
-                                words = viewModel.Keys.ToArray();
+                                words = viewModel?.Keys.ToArray() ?? Array.Empty<string>();
                             }
                         }
                         catch (Exception ex)
@@ -538,13 +538,13 @@ namespace Textmining.Demo.Web.Controllers
             
             var textMiningApiKey = _config.GetValue<string>("TextMiningApiKey");
             string jwtToken = string.Empty;
-            var client = new RestClient($"{_urlPath}Token/GetToken?apikey={textMiningApiKey}");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Cache-Control", "no-cache");
-            IRestResponse response = client.Execute(request);
-            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
+            var response = client.GetAsync($"{_urlPath}Token/GetToken?apikey={textMiningApiKey}").Result;
+            if (response.IsSuccessStatusCode)
             {
-                _token = jwtToken = (string)JObject.Parse(response.Content)["token"];
+                string res = response.Content.ReadAsStringAsync().Result;
+                jwtToken = (string)JObject.Parse(res)["token"];
             }
 
             return jwtToken;
@@ -555,17 +555,16 @@ namespace Textmining.Demo.Web.Controllers
             try
             {
                 //ToDo: check model validation
-                var client = new RestClient(apiUrl);
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Cache-Control", "no-cache");
-                request.AddHeader("Authorization", $"Bearer {GetJWTToken()}");
-                request.AddHeader("Content-Type", "application/json");
-                request.AddParameter("input", ObjectModelToString(inputModel), ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GetJWTToken());
 
-                if (!response.IsSuccessful)
+                var contentBody = new StringContent(ObjectModelToString(inputModel), Encoding.UTF8, "application/json");
+                var response = client.PostAsync(apiUrl, contentBody).Result;
+                if (!response.IsSuccessStatusCode)
                     _token = null;
-                return (response.Content, response.IsSuccessful);
+                string resp = response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : response.ToString();
+                return (resp, response.IsSuccessStatusCode);
             }
             catch (Exception ex)
             {
@@ -658,7 +657,7 @@ namespace Textmining.Demo.Web.Controllers
                                 "</p>";
 
                     //smtp.Send(mail);
-                    smtp.SendCompleted += (s, e) => {
+                    smtp.SendCompleted += (_, _) => {
                         smtp.Dispose();
                         mail.Dispose();
                     };
