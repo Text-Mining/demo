@@ -635,7 +635,8 @@ namespace Textmining.Demo.Web.Controllers
                         Credentials = new System.Net.NetworkCredential(_config.GetValue<string>("ErrorReport:SmtpUsername"),
                             _config.GetValue<string>("ErrorReport:SmtpPassword")),
                         //Timeout = 300000
-                        //Port = 587
+                        //Port = 587,
+                        //EnableSsl = true
                     };
                     /*#if DEBUG
                                          return RedirectToAction("Index");
@@ -656,7 +657,9 @@ namespace Textmining.Demo.Web.Controllers
                                 $"آدرس ابزار: {Request.Headers["Referer"]}" +
                                 "</p>";
 
-                    //smtp.Send(mail);
+                    /*smtp.Send(mail);
+                    smtp.Dispose();
+                    mail.Dispose();*/
                     smtp.SendCompleted += (_, _) => {
                         smtp.Dispose();
                         mail.Dispose();
