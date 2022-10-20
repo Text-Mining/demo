@@ -453,6 +453,35 @@ namespace Textmining.Demo.Web.Controllers
         }
         #endregion
 
+        #region Document Similarity
+        public IActionResult DocumentSimilarity()
+        {
+            //CheckFeedbackNotif();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DocumentSimilarity(DocumentSimilarityModel model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.Document1) && !string.IsNullOrWhiteSpace(model.Document2))
+            {
+                var result = CallApi($"{_urlPath}TextSimilarity/DocumentSimilarity", model);
+
+                if (result.Item2)
+                {
+                    ViewData["Output"] = result.Item1;
+                    return PartialView("_ApiOutput");
+                }
+                else
+                {
+                    ShowError(result.Item1);
+                }
+            }
+            return new EmptyResult();
+        }
+        #endregion
+
         #region WordCloud
         public IActionResult WordCloud()
         {

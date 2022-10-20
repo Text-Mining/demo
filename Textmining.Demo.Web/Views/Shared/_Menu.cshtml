@@ -1,7 +1,8 @@
 ﻿
 <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y" style="background-color:#fff">
     <ul class="nav">
-        @*https://material.io/resources/icons/*@
+	    @*https://material.io/resources/icons/*@
+		@*https://fonts.google.com/icons*@
         <li class="nav-item">
             <a class="nav-link" asp-action="Virastar" asp-controller="Home">
                 <i class="material-icons">spellcheck</i>
@@ -21,18 +22,24 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" asp-action="SwearWordTagger" asp-controller="Home">
-                <i class="material-icons">announcement</i>
-                <p>تشخیص کلمات زشت و رکیک</p>
-            </a>
+	        <a class="nav-link" asp-action="SwearWordTagger" asp-controller="Home">
+		        <i class="material-icons">announcement</i>
+		        <p>تشخیص کلمات زشت و رکیک</p>
+	        </a>
+        </li>
+        <li class="nav-item">
+	        <a class="nav-link" asp-action="DocumentSimilarity" asp-controller="Home">
+		        <i class="material-icons">compare</i>
+		        <p style="float: right" @*class="menu-item-main"*@>
+			        شباهت‌سنجی
+			        <div class="menu-item-alert">(نسخه آزمایشی)</div>
+		        </p>
+	        </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-action="SentimentClassifier" asp-controller="Home">
                 <i class="material-icons">insert_emoticon</i>
-                <p style="float: right" @*class="menu-item-main"*@>
-                    تحلیل حسی
-                    <div class="menu-item-alert">(نسخه آزمایشی)</div>
-                </p>
+                <p>تحلیل حسی</p>
             </a>
         </li>
         <li class="nav-item">
