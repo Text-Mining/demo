@@ -470,7 +470,7 @@ namespace Textmining.Demo.Web.Controllers
 
                 if (result.Item2)
                 {
-                    ViewData["Output"] = result.Item1;
+                    ViewData["Output"] = $"میزان شباهت دو عبارت فوق =  {Convert.ToDouble(result.Item1) * 100.0}%";
                     return PartialView("_ApiOutput");
                 }
                 else
