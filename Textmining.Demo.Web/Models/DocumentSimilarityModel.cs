@@ -36,10 +36,10 @@ namespace Textmining.Demo.Web.Models
         public bool UseStatisticalSimilarity { get; set; }
 
         /// <summary>
-        /// از ویراستاری (اصلاح کلمات بهم چسبیده و ...) برای تعیین شباهت استفاده شود
+        /// از ماژول اصلاح فاصله گذاری (اصلاح کلمات بهم چسبیده، پسوندهای جدا و ...) برای تعیین شباهت استفاده شود
         /// </summary>
         [DefaultValue(true)]
-        public bool UseVirastar { get; set; }
+        public bool UseSpaceCorrection { get; set; }
 
         /// <summary>
         /// از غلط یابی برای تعیین شباهت استفاده شود
