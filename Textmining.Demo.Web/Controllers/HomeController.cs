@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -498,9 +497,9 @@ namespace Textmining.Demo.Web.Controllers
             {
                 try
                 {
-                    string[] words = model.Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+                    string[] words = model.Text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                     // اگر به جای لیست کلمات متن وارد کرده بود
-                    if (words.Length < 20 && words.Average(w => w.Length) > 20)
+                    if (words.Length < 20 || words.Average(w => w.Length) > 20)
                     {
                         var model2 = new KeywordExtractionModel
                         {
@@ -540,13 +539,19 @@ namespace Textmining.Demo.Web.Controllers
                     var response = client.PostAsync($"{_urlPath}InformationRetrieval/WordCloudGeneration",
                         new StringContent(jsonStr, Encoding.UTF8, "application/json")).Result;
                     var bytesArray = response.Content.ReadAsByteArrayAsync().Result;
+
+
+                    string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".jpg";
+                    string filePath = Path.Combine(_currentPath, "wordcloud", fileName);
+                    if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
                     using (var ms = new MemoryStream(bytesArray))
+                    using (var fs = new FileStream(filePath, FileMode.Create))
                     {
-                        Image image = Image.FromStream(ms);
-                        string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".jpg";
-                        image.Save(Path.Combine(_currentPath, "wordcloud", fileName));
-                        return PartialView("_WordCloudOutput", "~/wordcloud/" + fileName);
+                        ms.WriteTo(fs);
                     }
+                    //Image.FromStream(ms).Save(filePath);
+                    return PartialView("_WordCloudOutput", "~/wordcloud/" + fileName);
                 }
                 catch (Exception ex)
                 {
